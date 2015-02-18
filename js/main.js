@@ -8,7 +8,7 @@ function getHomePageContents() {
   request.open("GET", "/main.php", true);
   request.onreadystatechange = function() {
     if(request.readyState==4 && request.status==200) {
-      document.getElementById("home_content").innerHTML = request.response;
+      document.getElementById("home_content").innerHTML = "<button type='button'>"+request.response+"</button>";
       console.log(request.response); //Testing response
     }
   }
