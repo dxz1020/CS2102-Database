@@ -1,6 +1,6 @@
-angular.module('todo',['ionic'])
+angular.module('store',['ionic'])
 
-.controller('TodoCtrl', function($scope, $ionicModal, $ionicPopup){
+.controller('storeCtrl', function($scope, $ionicModal, $ionicPopup){
 	$ionicModal.fromTemplateUrl('new-task.html', function(modal){
 		$scope.taskModal = modal;
 	}, {
