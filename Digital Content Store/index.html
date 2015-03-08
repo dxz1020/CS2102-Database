@@ -10,29 +10,42 @@
 		</head>
 		
 		<body ng-app="store" ng-controller="storeCtrl">
+			<ion-side-menus>
+			<!-- Center content -->
+			<ion-side-menu-content ng-controller="ContentController">
 			<ion-tabs class="tabs-positive tabs-icon-top">			
 				<ion-tab title="Home" icon-on="ion-home" icon-off="ion-home">
 					<ion-header-bar class="bar-positive">
+						<button class="button button-positive" ng-click="toggleLeft()">Options</button>
 						<h1 class="title">Home</h1>
 						<button class="button button-positive" ng-click="login()">login</button>
 					</ion-header-bar>
 				</ion-tab>
 				<ion-tab title="Music" icon-on="ion-ios7-musical-notes" icon-off="ion-ios7-musical-notes">
 					<ion-header-bar class="bar-positive">
+						<button class="button button-positive" ng-click="toggleLeft()">Options</button>
 						<h1 class="title">Music</h1>
 					</ion-header-bar>
 				</ion-tab>
 				<ion-tab title="Movies" icon-on="ion-ios7-film" icon-off="ion-ios7-film-outline">
 					<ion-header-bar class="bar-positive">
+						<button class="button button-positive" ng-click="toggleLeft()">Options</button>
 						<h1 class="title">Movies</h1>
 					</ion-header-bar>
 				</ion-tab>
 				<ion-tab title="Games" icon-on="ion-game-controller-a" icon-off="ion-game-controller-a">
 					<ion-header-bar class="bar-positive">
+						<button class="button button-positive" ng-click="toggleLeft()">Options</button>
 						<h1 class="title">Games</h1>
 					</ion-header-bar>
 				</ion-tab>
 			</ion-tabs>
+			</ion-side-menu-content>
+			
+			<ion-side-menu side="left">
+			<!-- Left content -->
+			</ion-side-menu>
+			
 			<script id="login.html" type="text/ng-template">
 				<div class="modal">
 					<ion-header-bar class="bar-stable">

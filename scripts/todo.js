@@ -14,3 +14,9 @@ angular.module('store',['ionic'])
 		$scope.taskModal.hide();
 	}
 });
+
+function ContentController($scope, $ionicSideMenuDelegate) {
+  $scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+}
