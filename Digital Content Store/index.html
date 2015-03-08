@@ -1,109 +1,132 @@
-	<!DOCTYPE html>
-	<html>
-		<head>
+			<!DOCTYPE html>
+			<html>
+			<head>
 			<meta charset="utf-8">
 			<title>Digital Content Store</title>
 			<meta name="viewport" content="initial-sacle=1, maximum-scale=1, user-scalable=no, width=device-width">
 			<link rel="stylesheet" href="../lib/css/ionic.min.css">
 			<script src="../lib/js/ionic.bundle.min.js"></script>
 			<script src="../scripts/todo.js"></script>
-		</head>
-		
-		<body ng-app="store" ng-controller="storeCtrl">
+			</head>
+
+			<body ng-app="store" ng-controller="storeCtrl">
 			<ion-side-menus>
 			<!-- Center content -->
 			<ion-side-menu-content ng-controller="ContentController">
 			<ion-tabs class="tabs-positive tabs-icon-top">			
-				<ion-tab title="Home" icon-on="ion-home" icon-off="ion-home">
-					<ion-header-bar class="bar-positive">
-						<button class="button button-positive" ng-click="toggleLeft()">Options</button>
-						<h1 class="title">Home</h1>
-						<button class="button button-positive" ng-click="login()">login</button>
-					</ion-header-bar>
-				</ion-tab>
-				<ion-tab title="Music" icon-on="ion-ios7-musical-notes" icon-off="ion-ios7-musical-notes">
-					<ion-header-bar class="bar-positive">
-						<button class="button button-positive" ng-click="toggleLeft()">Options</button>
-						<h1 class="title">Music</h1>
-					</ion-header-bar>
-				</ion-tab>
-				<ion-tab title="Movies" icon-on="ion-ios7-film" icon-off="ion-ios7-film-outline">
-					<ion-header-bar class="bar-positive">
-						<button class="button button-positive" ng-click="toggleLeft()">Options</button>
-						<h1 class="title">Movies</h1>
-					</ion-header-bar>
-				</ion-tab>
-				<ion-tab title="Games" icon-on="ion-game-controller-a" icon-off="ion-game-controller-a">
-					<ion-header-bar class="bar-positive">
-						<button class="button button-positive" ng-click="toggleLeft()">Options</button>
-						<h1 class="title">Games</h1>
-					</ion-header-bar>
-				</ion-tab>
+			<ion-tab title="Home" icon-on="ion-home" icon-off="ion-home">
+			<ion-header-bar class="bar-positive">
+			<button class="button button-positive" ng-click="toggleLeft()">Options</button>
+			<h1 class="title">Home</h1>
+			<button class="button button-positive" ng-click="login()">login</button>
+			</ion-header-bar>
+			<br/>
+			<br/>
+			</div>
+			<div class="card">
+			<div class="item item-text-wrap">
+			This is a basic Card which contains an item that has wrapping text.
+			</div>
+			</div>
+			<div class="list">
+
+			<a class="item item-thumbnail-left">
+			<img src="../images/adele.jpg">
+			<h2>Adele</h2>
+			<p>21</p>
+			<p class="subdued">1 Like</p>
+			</a>
+			<div class="item tabs tabs-secondary tabs-icon-left">
+			<a class="tab-item">
+			<i class="icon ion-thumbsup"></i>
+			Like
+			</a>
+			</div>
+			</div>
+			</ion-tab>
+			<ion-tab title="Music" icon-on="ion-ios7-musical-notes" icon-off="ion-ios7-musical-notes">
+			<ion-header-bar class="bar-positive">
+			<button class="button button-positive" ng-click="toggleLeft()">Options</button>
+			<h1 class="title">Music</h1>
+			</ion-header-bar>
+			</ion-tab>
+			<ion-tab title="Movies" icon-on="ion-ios7-film" icon-off="ion-ios7-film-outline">
+			<ion-header-bar class="bar-positive">
+			<button class="button button-positive" ng-click="toggleLeft()">Options</button>
+			<h1 class="title">Movies</h1>
+			</ion-header-bar>
+			</ion-tab>
+			<ion-tab title="Games" icon-on="ion-game-controller-a" icon-off="ion-game-controller-a">
+			<ion-header-bar class="bar-positive">
+			<button class="button button-positive" ng-click="toggleLeft()">Options</button>
+			<h1 class="title">Games</h1>
+			</ion-header-bar>
+			</ion-tab>
 			</ion-tabs>
 			</ion-side-menu-content>
-			
+
 			<ion-side-menu side="left">
 			<!-- Left content -->
 			<div class="list list-inset">
-				<label class="item item-input">
-					<i class="icon ion-search placeholder-icon"></i>
-					<input type="text" placeholder="Search">
-				</label>
+			<label class="item item-input">
+			<i class="icon ion-search placeholder-icon"></i>
+			<input type="text" placeholder="Search">
+			</label>
 			</div>
 			<ul class="list">
-				  <li class="item item-toggle">
-					 Option A
-					 <label class="toggle toggle-assertive">
-					   <input type="checkbox">
-					   <div class="track">
-						 <div class="handle"></div>
-					   </div>
-					 </label>
-				  </li>
-				  <li class="item item-toggle">
-					 Option B
-					 <label class="toggle toggle-assertive">
-					   <input type="checkbox">
-					   <div class="track">
-						 <div class="handle"></div>
-					   </div>
-					 </label>
-				  </li>
-				  <li class="item item-toggle">
-					 Option C
-					 <label class="toggle toggle-assertive">
-					   <input type="checkbox">
-					   <div class="track">
-						 <div class="handle"></div>
-					   </div>
-					 </label>
-				  </li>
+			<li class="item item-toggle">
+			Option A
+			<label class="toggle toggle-assertive">
+			<input type="checkbox">
+			<div class="track">
+			<div class="handle"></div>
+			</div>
+			</label>
+			</li>
+			<li class="item item-toggle">
+			Option B
+			<label class="toggle toggle-assertive">
+			<input type="checkbox">
+			<div class="track">
+			<div class="handle"></div>
+			</div>
+			</label>
+			</li>
+			<li class="item item-toggle">
+			Option C
+			<label class="toggle toggle-assertive">
+			<input type="checkbox">
+			<div class="track">
+			<div class="handle"></div>
+			</div>
+			</label>
+			</li>
 			</ul>
 			</ion-side-menu>
-			
+
 			<script id="login.html" type="text/ng-template">
-				<div class="modal">
-					<ion-header-bar class="bar-stable">
-						<h1 class="title">Welcome</h1>
-						<button class="button button-assertive" ng-click="close()">Cancel</button> 
-					</ion-header-bar>
-					
-					<ion-content class="padding has-header">
-							<div class="list list-inset">
-								<label class="item item-input">
-									<input type="text" placeholder="Username">
-								</label>
-							</div>
-							<div class="list list-inset">
-								<label class="item item-input">
-									<input type="text" placeholder="Password">
-								</label>
-							</div>
-							<div class="padding">
-								<button class="button button-block button-stable" ng-click="close()">Login</button>
-							</div>
-					</ion-content>
-				</div>
+			<div class="modal">
+			<ion-header-bar class="bar-stable">
+			<h1 class="title">Welcome</h1>
+			<button class="button button-assertive" ng-click="close()">Cancel</button> 
+			</ion-header-bar>
+
+			<ion-content class="padding has-header">
+			<div class="list list-inset">
+			<label class="item item-input">
+			<input type="text" placeholder="Username">
+			</label>
+			</div>
+			<div class="list list-inset">
+			<label class="item item-input">
+			<input type="text" placeholder="Password">
+			</label>
+			</div>
+			<div class="padding">
+			<button class="button button-block button-stable" ng-click="close()">Login</button>
+			</div>
+			</ion-content>
+			</div>
 			</script>
-		</body>
-	</html>
+			</body>
+			</html>
