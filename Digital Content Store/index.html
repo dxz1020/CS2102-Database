@@ -14,6 +14,7 @@
 				<ion-tab title="Home" icon-on="ion-home" icon-off="ion-home">
 					<ion-header-bar class="bar-positive">
 						<h1 class="title">Home</h1>
+						<button class="button button-positive" ng-click="login()">login</button>
 					</ion-header-bar>
 				</ion-tab>
 				<ion-tab title="Music" icon-on="ion-ios7-musical-notes" icon-off="ion-ios7-musical-notes">
@@ -32,5 +33,29 @@
 					</ion-header-bar>
 				</ion-tab>
 			</ion-tabs>
+			<script id="login.html" type="text/ng-template">
+				<div class="modal">
+					<ion-header-bar class="bar-stable">
+						<h1 class="title">Welcome</h1>
+						<button class="button button-assertive" ng-click="close()">Cancel</button> 
+					</ion-header-bar>
+					
+					<ion-content class="padding has-header">
+							<div class="list list-inset">
+								<label class="item item-input">
+									<input type="text" placeholder="Username">
+								</label>
+							</div>
+							<div class="list list-inset">
+								<label class="item item-input">
+									<input type="text" placeholder="Password">
+								</label>
+							</div>
+							<div class="padding">
+								<button class="button button-block button-stable" ng-click="close()">Login</button>
+							</div>
+					</ion-content>
+				</div>
+			</script>
 		</body>
 	</html>
