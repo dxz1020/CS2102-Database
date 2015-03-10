@@ -63,6 +63,15 @@ rating INT NOT NULL CHECK(rating>=0 AND rating<=5),
 PRIMARY KEY (user, item)
 );
 
+-- Trigger to update item's overall rating after inserting a new rating
+delimiter //
+CREATE TRIGGER update_item_rating AFTER INSERT ON Rating
+FOR EACH ROW
+BEGIN
+UPDATE Item SET rating = (SELECT AVG(rating) FROM Rating GROUP BY item HAVING Item.item_id=item) WHERE item_id=NEW.item;
+END;//
+delimiter ;
+
 INSERT INTO Item VALUES ('1', 'Brave Frontier', 'Game', 'RPG', 'Android', '2013-1-1', 0, 0, 0);
 INSERT INTO Item VALUES ('2', 'The Hobbit: An Unexpected Journey', 'Movie', 'Fantasy', 'DVD', '2012-12-15', 30, 13, 0);
 INSERT INTO User VALUES('zx@email.com', 'zixian', 'password', 'Y');
