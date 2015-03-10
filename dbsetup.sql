@@ -59,7 +59,7 @@ PRIMARY KEY(user, item, borrow_date)
 CREATE TABLE Rating (
 user VARCHAR(64) REFERENCES User(email),
 item VARCHAR(32) REFERENCES Item(item_id),
-rating INT NOT NULL CHECK(rating>=0 AND rating<=5),
+rating INT NOT NULL CHECK(rating>0 AND rating<=5),
 PRIMARY KEY (user, item)
 );
 
