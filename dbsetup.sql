@@ -7,7 +7,7 @@ device VARCHAR(64) NOT NULL,
 release_date DATE NOT NULL,
 price NUMBER(*, 2) NOT NULL CHECK(price>=0),
 rent_price NUMBER(*, 2) NOT NULL CHECK(rent_price>=0),
-rating INT DEFAULT 0 NOT NULL
+rating NUMBER(2, 1) DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE Accounts (
