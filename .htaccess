@@ -2,4 +2,5 @@ RewriteEngine On
 
 RewriteBase /
 
-RewriteRule ^search(.*) search.php?%{QUERY_STRING} [L]
+RewriteRule ^search	search.php?%{QUERY_STRING} [L]
+RewriteRule ^login	login.php [L]
