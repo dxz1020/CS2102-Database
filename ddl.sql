@@ -1,19 +1,21 @@
 CREATE TABLE Item (
+item_id VARCHAR(32) PRIMARY KEY,
 title VARCHAR(128) NOT NULL,
 category VARCHAR(64) NOT NULL,
 genre VARCHAR(64) NOT NULL,
 device VARCHAR(64) NOT NULL,
 release_date DATE NOT NULL,
-item_id VARCHAR(32) PRIMARY KEY, --i think we need a unique id for item because they can be too many duplicates
 price NUMBER NOT NULL CHECK(price>=0),
 rent_price NUMBER NOT NULL CHECK(rent_price>=0), 
 );
 
 CREATE TABLE User (
-username VARCHAR(64) PRIMARY KEY,
+email VARCHAR(64) PRIMARY KEY,
+username VARCHAR(64) NOT NULL,
 password VARCHAR(64) NOT NULL,
 admin CHAR(1) NOT NULL CHECK(admin='Y' OR admin='N')
 );
+
 
 CREATE TABLE Purchase(
 purchase_date DATE NOT NULL,
@@ -38,5 +40,5 @@ rating INT(1) NOT NULL CHECK(rating >=0 AND rating<=5),
 item_id VARCHAR(32) REFERENCES Item(item_id),
 username VARCHAR(64) REFERENCES User(username),
 PRIMARY KEY(username, item_id)
-)
+);
 

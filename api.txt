@@ -1,0 +1,21 @@
+How to use API URL:
+Suppose the URL is '/search', the actual URL is 'sitename/search'
+If parameters are to be passed, the URL will be like 'sitename/search?title=A'
+For POST parameters, set 'Content-Type' request header to 'application/json'.
+
+1. Search for Items
+   Method: GET
+   URL: /search
+   Parameters: title -> The title of the item to search
+	       category -> The category of the item to search
+	       genre -> The genre of the item to search. category must be specified.
+	       device: The platform for the searched item.
+   * Note: Not specifying any parameters causes the entire list of items to be
+	   displayed.
+
+2. Login
+   Method: POST
+   URL: /login
+   Parameters: email -> The user's login email address
+	       password -> The login password
+	       admin -> Either 'Y' or 'N'
