@@ -5,7 +5,7 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
 
 1. Search for Items
    Method: GET
-   URL: /search
+   URL: /search.php
    Parameters: title -> The title of the item to search
 	       category -> The category of the item to search
 	       genre -> The genre of the item to search. category must be specified.
@@ -15,7 +15,7 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
 
 2. Login
    Method: POST
-   URL: /login
+   URL: /login.php
    Parameters: email -> The user's login email address
 	       password -> The login password
 	       admin -> Either 'Y' or 'N'
