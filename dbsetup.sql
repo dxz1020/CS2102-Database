@@ -50,9 +50,9 @@ END;
 /
 
 -- Inserting  a few dummy values to test integrity constraints and triggers.
-INSERT INTO Item VALUES ('1', 'Brave Frontier', 'Game', 'RPG', 'Android', to_date('2013-1-1', 'yyyy-mm-dd'), 0, 0, 0);
-INSERT INTO Item VALUES ('2', 'The Hobbit: An Unexpected Journey', 'Movie', 'Fantasy', 'DVD', to_date('2012-12-15', 'yyyy-mm-dd'), 30, 13, 0);
-INSERT INTO Accounts VALUES('zx@email.com', 'zixian', 'password', 'Y');
-INSERT INTO Purchase VALUES ('zx@email.com', '1', to_date('2014-4-10', 'yyyy-mm-dd'));
-INSERT INTO Rent VALUES ('zx@email.com', '2', to_date('2014-12-15', 'yyyy-mm-dd'), to_date('2014-12-29', 'yyyy-mm-dd'), NULL);
-INSERT INTO Rating VALUES ('zx@email.com', '1', 4);
+-- INSERT INTO Item VALUES ('1', 'Brave Frontier', 'Game', 'RPG', 'Android', to_date('2013-1-1', 'yyyy-mm-dd'), 0, 0, 0);
+-- INSERT INTO Item VALUES ('2', 'The Hobbit: An Unexpected Journey', 'Movie', 'Fantasy', 'DVD', to_date('2012-12-15', 'yyyy-mm-dd'), 30, 13, 0);
+-- INSERT INTO Accounts VALUES('zx@email.com', 'zixian', 'password', 'Y');
+-- INSERT INTO Purchase VALUES ('zx@email.com', '1', to_date('2014-4-10', 'yyyy-mm-dd'));
+-- INSERT INTO Rent VALUES ('zx@email.com', '2', to_date('2014-12-15', 'yyyy-mm-dd'), to_date('2014-12-29', 'yyyy-mm-dd'), NULL);
+-- INSERT INTO Rating VALUES ('zx@email.com', '1', 4);
