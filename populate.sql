@@ -180,7 +180,6 @@ INSERT INTO Accounts (email,username,password,admin) VALUES ('Rudolph@cs2102.com
 INSERT INTO Accounts (email,username,password,admin) VALUES ('Marybeth@cs2102.com','marybeth','qwerty','N');
 INSERT INTO Accounts (email,username,password,admin) VALUES ('Lupe@cs2102.com','lupe','qwerty','N');
 INSERT INTO Accounts (email,username,password,admin) VALUES ('Adriene@cs2102.com','adriene','qwerty','N');
-INSERT INTO Accounts (email,username,password,admin) VALUES ('Epifania@cs2102.com','epifania','qwerty','N');
 INSERT INTO Accounts (email,username,password,admin) VALUES ('Mee@cs2102.com','mee','qwerty','N');
 INSERT INTO Accounts (email,username,password,admin) VALUES ('Dorene@cs2102.com','dorene','qwerty','N');
 INSERT INTO Accounts (email,username,password,admin) VALUES ('Cecilia@cs2102.com','cecilia','qwerty','N');
