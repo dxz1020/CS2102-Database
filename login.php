@@ -14,7 +14,7 @@
     exit(0);
   }
 
-  //Use SHA1 hashign for password when implementing login and new user
+  //Use SHA1 hashing for password when implementing login and new user
   $email = $param_list['email'];
   $password = $param_list['password'];
 
@@ -39,10 +39,13 @@
   oci_execute($stmt);
 
   if($row = oci_fetch_assoc($stmt)){
-    //Set up login session for user
-    echo true;
+    session_start();
+    $_SESSION['email'] = $row['EMAIL'];
+    $_SESSION['username'] = $row['USERNAME'];
+    $_SESSION['admin'] = $row['ADMIN'];
+    echo $_SESSION['email'];
   } else
-    echo false;
+    echo 0;
 
   oci_free_statement($stmt);
 
