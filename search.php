@@ -49,5 +49,4 @@
 
   //Closes the database connection
   oci_close($dbh);
-  echo $_GET['message'];
 ?>
