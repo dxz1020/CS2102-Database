@@ -43,7 +43,7 @@
     $_SESSION['email'] = $row['EMAIL'];
     $_SESSION['username'] = $row['USERNAME'];
     $_SESSION['admin'] = $row['ADMIN'];
-    echo $_SESSION['email'];
+    echo 1;
   } else
     echo 0;
 
