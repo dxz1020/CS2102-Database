@@ -1,6 +1,13 @@
-RewriteEngine Off
+RewriteEngine On
 
+# Make sure actual directory structure in ZONE server is the same as in Github.
+# Use your own matric number when testing on your own ZONE server.
+# Else, use the matric number of the member's ZONE account where the final
+# product will be hosted.
+# Eg. /~a1234567/
+# If testing on localhost with VirtualHost DocumentRoot properly configured,
+# RewriteBase should be /
 RewriteBase /
 
-RewriteRule ^search	search.php?%{QUERY_STRING} [L]
+RewriteRule ^search$(.*)	search.php$1 [L]
 RewriteRule ^login	login.php [L]
