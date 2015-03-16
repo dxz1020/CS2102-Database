@@ -19,8 +19,8 @@
   $password = $param_list['password'];
 
   putenv("ORACLE_HOME=/oraclient");
-  $dbuser = "a0110781";
-  $dbpassword = "Nana7Nana";
+  $dbuser = "a0110781";		//Your own account
+  $dbpassword = "Nana7Nana";	//Change to appropriate password
   $dbinfo = "(DESCRIPTION = (ADDRESS_LIST = (
       ADDRESS = (PROTOCOL = TCP)(HOST = sid3.comp.nus.edu.sg)(PORT = 1521))
     )(CONNECT_DATA = (SERVICE_NAME = sid3.comp.nus.edu.sg)))";
