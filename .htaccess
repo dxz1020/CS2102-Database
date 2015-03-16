@@ -1,5 +1,6 @@
 RewriteEngine On
 
+# Change to your own matric number if you are testing on your ZONE server
 RewriteBase /~a0110781/
 
 RewriteRule ^search$(.*)	search.php$1 [L]
