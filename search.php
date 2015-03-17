@@ -36,6 +36,13 @@
       $query.=" AND ".$param_array[$i];
   }
 
+  if(isset($_GET['sortby'])){ //Adds ordering element to the search query
+    $query.=" ORDER BY ".$_GET['sortby'];
+    if($_GET['sortby']=="rating")
+      $query.=" DESC";
+  } else
+    $query.=" ORDER BY rating DESC, category, genre, device, title";
+
   $stmt = oci_parse($dbh, $query);
   oci_execute($stmt);
 
