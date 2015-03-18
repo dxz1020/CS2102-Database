@@ -18,7 +18,7 @@
         <!-- Center content -->
         <ion-side-menu-content ng-controller="ContentController">
             <ion-tabs class="tabs-positive tabs-icon-top">			
-                <ion-tab title="Home" icon-on="ion-home" icon-off="ion-home">
+                <ion-tab title="Home" icon-on="ion-home" icon-off="ion-home" on-select="getApp()">
                     <ion-header-bar class="bar-positive">
                         <button class="button button-positive" ng-click="toggleLeft()">Options</button>
                         <h1 class="title">Home</h1>
@@ -27,6 +27,7 @@
                     <!-- start of tab contents, write page contents below this-->
                     <br/>
                     <br/>
+
                     <div class="card"  onclick="getApp()"> <!--this works-->
                         <div class="item item-text-wrap">
                             This is a basic Card which contains an item that has wrapping text.
@@ -34,7 +35,6 @@
                     </div>
 
                     <div class="card">
-
                         <a class="item item-thumbnail-left">
                             <img src="images/adele.jpg">
                             <h2>Adele</h2>
@@ -55,26 +55,34 @@
                         TestCardList3
                     </div>
                 </ion-tab>
-                <ion-tab title="Music" icon-on="ion-ios7-musical-notes" icon-off="ion-ios7-musical-notes">
+                <ion-tab title="App" icon-on="ion-briefcase" icon-off="ion-briefcase" on-select="getApp()">
                     <ion-header-bar class="bar-positive">
                         <button class="button button-positive" ng-click="toggleLeft()">Options</button>
-                        <h1 class="title">Music</h1>
+                        <h1 class="title">Lifestyle</h1>
                     </ion-header-bar>
                     <br/>
                     <br/>
-                    <div class="card"  onclick="getApp()"> <!--this works-->
+                </ion-tab>
+                <ion-tab title="TV" icon-on="ion-monitor" icon-off="ion-monitor" on-select="getTV()">
+                    <ion-header-bar class="bar-positive">
+                        <button class="button button-positive" ng-click="toggleLeft()">Options</button>
+                        <h1 class="title">TV</h1>
+                    </ion-header-bar>
+                    <br/>
+                    <br/>
+                    <div class="card"> <!--this works-->
                         <div class="item item-text-wrap">
                             TestCardList
                         </div>
                     </div>
                 </ion-tab>
-                <ion-tab title="Movies" icon-on="ion-ios7-film" icon-off="ion-ios7-film-outline">
+                <ion-tab title="Movies" icon-on="ion-ios7-film" icon-off="ion-ios7-film-outline" on-select="getMovie()">
                     <ion-header-bar class="bar-positive">
                         <button class="button button-positive" ng-click="toggleLeft()">Options</button>
                         <h1 class="title">Movies</h1>
                     </ion-header-bar>
                 </ion-tab>
-                <ion-tab title="Games" icon-on="ion-game-controller-a" icon-off="ion-game-controller-a">
+                <ion-tab title="Games" icon-on="ion-game-controller-a" icon-off="ion-game-controller-a" on-select="getGame()">
                     <ion-header-bar class="bar-positive">
                         <button class="button button-positive" ng-click="toggleLeft()">Options</button>
                         <h1 class="title">Games</h1>
