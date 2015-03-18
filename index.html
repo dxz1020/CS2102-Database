@@ -24,16 +24,16 @@
                         <h1 class="title">Home</h1>
                         <button class="button button-positive" ng-click="login()">login</button>
                     </ion-header-bar>
+					<!-- start of tab contents, write page contents below this-->
                     <br/>
                     <br/>
-                    </div>
                     <div class="card"  onclick="getApp()"> <!--this works-->
                         <div class="item item-text-wrap">
                             This is a basic Card which contains an item that has wrapping text.
                         </div>
                     </div>
 
-                    <div class="list">
+                    <div class="card">
 
                         <a class="item item-thumbnail-left">
                             <img src="images/adele.jpg">
@@ -48,12 +48,25 @@
                             </a>
                         </div>
                     </div>
+					<div class="item item-text-wrap" onclick="getApp()">
+                            TestCardList2
+                    </div>
+					<div class="item item-text-wrap" onclick="getApp()">
+                            TestCardList3
+                    </div>
                 </ion-tab>
                 <ion-tab title="Music" icon-on="ion-ios7-musical-notes" icon-off="ion-ios7-musical-notes">
                     <ion-header-bar class="bar-positive">
-                        <button class="button button-positive" ng-click="toggleLeft()" onclick="getApp()">Options</button>
+                        <button class="button button-positive" ng-click="toggleLeft()">Options</button>
                         <h1 class="title">Music</h1>
                     </ion-header-bar>
+					<br/>
+                    <br/>
+					<div class="card"  onclick="getApp()"> <!--this works-->
+                        <div class="item item-text-wrap">
+                            TestCardList
+                        </div>
+                    </div>
                 </ion-tab>
                 <ion-tab title="Movies" icon-on="ion-ios7-film" icon-off="ion-ios7-film-outline">
                     <ion-header-bar class="bar-positive">
