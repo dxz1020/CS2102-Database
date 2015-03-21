@@ -7,7 +7,7 @@ device VARCHAR(64) NOT NULL,
 release_date DATE NOT NULL,
 price NUMBER(*, 2) NOT NULL CHECK(price>=0),
 rent_price NUMBER(*, 2) NOT NULL CHECK(rent_price>=0),
-rating NUMBER(2, 1) DEFAULT 0 NOT NULL
+likes INT DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE Accounts (
@@ -35,19 +35,37 @@ CHECK(borrow_date<=due_date),
 CHECK(return_date IS NULL OR borrow_date<=return_date)
 );
 
-CREATE TABLE Rating (
+CREATE TABLE Likes (
 customer VARCHAR(64) REFERENCES Accounts(email),
 item VARCHAR(32) REFERENCES Item(item_id),
-rating INT NOT NULL CHECK(rating>0 AND rating<=5),
 PRIMARY KEY (customer, item)
 );
 
 -- Trigger to update item's overall rating after inserting a new rating
-CREATE TRIGGER update_item_rating AFTER INSERT ON Rating
+CREATE TRIGGER on_add_like AFTER INSERT ON Likes
+FOR EACH ROW
 BEGIN
-UPDATE Item SET rating = (SELECT AVG(rating) FROM Rating GROUP BY item HAVING Item.item_id=item) WHERE EXISTS (SELECT * FROM Rating WHERE item=Item.item_id);
+UPDATE Item SET likes = likes+1 WHERE item_id=:NEW.item;
 END;
 /
+
+CREATE TRIGGER on_remove_like AFTER DELETE ON Likes
+FOR EACH ROW
+BEGIN
+UPDATE Item SET likes = likes-1 WHERE item_id=:OLD.item;
+END;
+/
+
+-- Inserting some dummy values to test the triggers.
+INSERT INTO Accounts VALUES('a@email.com', 'A', 'pwd', 'Y');
+INSERT INTO Accounts VALUES('b@email.com', 'B', 'password', 'N');
+INSERT INTO Item VALUES('1', 'TunesHolic', 'Game', 'Music', 'iOS', to_date('2013-10-2', 'yyyy-mm-dd'), 0, 0, 0);
+INSERT INTO Item VALUES('2', 'Brave Frontier', 'Game', 'RPG', 'Android', to_date('2013-7-3', 'yyyy-mm-dd'), 0, 0, 0);
+INSERT INTO Likes VALUES('a@email.com', '1');
+INSERT INTO Likes VALUES('b@email.com', '1');
+INSERT INTO Likes VALUES('a@email.com', '2');
+DELETE FROM Likes WHERE customer='a@email.com' AND item='1';
+DELETE FROM Likes WHERE customer='a@email.com' AND item='2';
 
 -- Inserting  a few dummy values to test integrity constraints and triggers.
 -- INSERT INTO Item VALUES ('1', 'Brave Frontier', 'Game', 'RPG', 'Android', to_date('2013-1-1', 'yyyy-mm-dd'), 0, 0, 0);

@@ -1,4 +1,4 @@
-DROP TABLE Rating;
+DROP TABLE Likes;
 DROP TABLE Rent;
 DROP TABLE Purchase;
 DROP TABLE Accounts;
