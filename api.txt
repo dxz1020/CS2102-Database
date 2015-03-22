@@ -29,3 +29,12 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
    Method: POST
    URL: /transactions/buy
    Parameters: itemid -> The id of the item to buy.
+
+5. Rent
+   Method: POST
+   URL: /transactions/rent
+   Parameters: itemid -> The id of the item to rent.
+
+6. View Transaction History
+   Method: GET
+   URL: /transactions/history
