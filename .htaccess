@@ -6,3 +6,4 @@ RewriteBase /~a0110781/
 RewriteRule ^search$(.*)	search.php$1 [L]
 RewriteRule ^login	login.php [L]
 RewriteRule ^logout	logout.php [L]
+RewriteRule ^transactions/(.*)$	transactions.php?type=$1 [L]
