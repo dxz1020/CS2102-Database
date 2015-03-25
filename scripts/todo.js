@@ -20,7 +20,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		$ionicSideMenuDelegate.toggleLeft();
 	};
 
-	$scope.getApp = function() {
+	$scope.getLifestyle = function() {
 		$.ajax({
 			method: "GET",
 			url: "search.php",
@@ -29,7 +29,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			var listOfApps = JSON.parse(msg);
-			checkArr(listOfApps);       
+			renderSection(listOfApps, "lifestyleSection");   
 		})
 		.fail(function(msg) {
 			console.log("failed"); 
@@ -45,7 +45,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			var listOfMovie = JSON.parse(msg);
-			checkArr(listOfMovie);       
+			renderSection(listOfMovie, "movieSection");       
 		})
 		.fail(function(msg) {
 			console.log("failed"); 
@@ -61,7 +61,8 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			var listOfTV = JSON.parse(msg);
-			checkArr(listOfTV);       
+			renderSection(listOfTV, "TVSection"); 
+			//checkArr(listOfTV);       
 		})
 		.fail(function(msg) {
 			console.log("failed"); 
@@ -77,10 +78,53 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			var listOfGame = JSON.parse(msg);
-			checkArr(listOfGame);       
+			renderSection(listOfGame, "gameSection"); 
+			//checkArr(listOfGame);       
 		})
 		.fail(function(msg) {
 			console.log("failed "); 
 		});
 	};
+}
+
+function checkArr(arr){
+ for(var i = 0 ; i < arr.length ; i++) 
+  console.log(arr[i]);
+}
+
+function renderSection(arr, type){
+	var string = "";
+
+	for(var i=0;i<arr.length;i++){
+
+		string +=
+		'<div class="item item-text-wrap">' +
+		"Title: " + arr[i].TITLE + "<br />" +
+		"Category: " + arr[i].CATEGORY + "<br />" +
+		"Genre: " + arr[i].GENRE + "<br />" +
+		"Device: " + arr[i].DEVICE + "<br />" +
+		"Likes: " + arr[i].LIKES + "<br />" +
+		"Price: " + arr[i].PRICE + "<br />" +
+		"Rent: " + arr[i].RENT_PRICE + "<br />" +
+		"Release: " + arr[i].RELEASE_DATE + 
+		'</div>' ;  
+	}
+	document.getElementById(type).innerHTML= string;
+}
+
+function login(){
+    //get variables
+    $.ajax({
+    method: "POST",
+    url: "login.php",
+    data: { email: name,
+            password: pw
+          }
+  })
+  .done(function( msg ) {
+    console.log( "Login successful " + msg ); 
+  })
+  .fail(function(msg) {
+    console.log("failed"); 
+  });
 }
