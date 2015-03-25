@@ -156,7 +156,7 @@
         </ion-side-menu>
 
         <script id="login.html" type="text/ng-template">
-            <div class="modal">
+            <div class="modal" ng-controller = "LoginController">
             <ion-header-bar class="bar-stable">
             <h1 class="title">Welcome</h1>
             <button class="button button-assertive" ng-click="close()">Cancel</button> 
@@ -164,18 +164,18 @@
 
             <ion-content class="padding has-header">
             <div class="list list-inset">
+            <form id = "loginForm">
             <label class="item item-input">
-            <input type="text" placeholder="Username">
+            <input type="text" name="email" placeholder="Username">
             </label>
-            </div>
-            <div class="list list-inset">
-            <label class="item item-input">
-            <input type="text" placeholder="Password">
+            <label class="item item-input"> 
+            <input type="text" name="password" placeholder="Password">
             </label>
             </div>
             <div class="padding">
-            <button class="button button-block button-stable" ng-click="close()">Login</button>
+            <button class="button button-block button-stable" ng-click="userLogin()">Login</button>
             </div>
+            </form>
             </ion-content>
             </div>
         </script>

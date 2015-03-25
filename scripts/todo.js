@@ -1,6 +1,6 @@
-angular.module('store',['ionic'])
+var myApp = angular.module('store',['ionic'])
 
-.controller('storeCtrl', function($scope, $ionicModal, $ionicPopup){
+myApp.controller('storeCtrl', function($scope, $ionicModal, $ionicPopup){
 	$ionicModal.fromTemplateUrl('login.html', function(modal){
 		$scope.taskModal = modal;
 	}, {
@@ -112,19 +112,47 @@ function renderSection(arr, type){
 	document.getElementById(type).innerHTML= string;
 }
 
-function login(){
-    //get variables
-    $.ajax({
-    method: "POST",
-    url: "login.php",
-    data: { email: name,
-            password: pw
-          }
-  })
-  .done(function( msg ) {
-    console.log( "Login successful " + msg ); 
-  })
-  .fail(function(msg) {
-    console.log("failed"); 
-  });
-}
+
+myApp.controller('LoginController', ['$scope', function($scope) {
+  	
+  	$scope.login = function(){
+		$scope.taskModal.show();
+	};
+	$scope.close = function(){
+		$scope.taskModal.hide();
+	}
+
+	$scope.userLogin = function() {
+		var info = $('#loginForm').serializeArray();
+
+		var name = info[0].value;
+		var pw = info[1].value;
+		
+		info = {
+			'email' : name,
+			'password' : pw
+			};
+
+		var infoJSON = JSON.stringify(info);
+
+		$.ajax({
+			method: "POST",
+			url: "login.php",
+			data: infoJSON
+		})
+		.done(function( msg ) {
+			if(msg==1){
+				console.log( "Login successful");
+			}
+			else {
+				console.log( "Verification failed");
+			}
+					 
+		})
+		.fail(function(msg) {
+			console.log("error"); 
+		});
+	};
+
+}]);
+
