@@ -44,12 +44,41 @@
     echo 'Transaction history retrieved';
   }
 
-  if(!isset($_GET['type'])) http_response_code(400);
+  function processLike(){
+    $dbh = connectToDatabase();
+    closeConnection($dbh);
+    echo 'Liked item';
+  }
+
+  function processUnlike(){
+    $dbh = conenctToDatabase();
+    closeConnection($dbh);
+    echo 'Unliked item';
+  }
+
+  session_start();
+
+  echo isset($_SESSION['email'])? 'YES': 'NO';
+
+  //Forbid access if user is not logged in properly.
+  if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
+	!isset($_SESSION['admin'])){
+    http_response_code(403);
+    exit(0);
+  }
+
+  //Checks for invalid API calls
+  if(!isset($_GET['type'])){
+    http_response_code(400);
+    exit(0);
+  }
 
   switch($_GET['type']){
     case 'buy': processPurchase(); break;
     case 'rent': processRent(); break;
     case 'history': getTransactionHistory(); break;
+    case 'like': processLike(); break;
+    case 'unlike': processUnlike(); break;
     default: http_response_code(400); break;
   }
 ?>
