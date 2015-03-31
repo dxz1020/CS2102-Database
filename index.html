@@ -5,7 +5,7 @@
         <title>Digital Content Store</title>
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <link rel="stylesheet" href="lib/css/ionic.min.css">
-		<link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/main.css">
 
         <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>        
@@ -27,59 +27,59 @@
                         <button class="button button-positive" ng-click="login()">login</button>
                     </ion-header-bar>
                     <!-- start of tab contents, write page contents below this-->                    
-					<ion-content>
-                    <div class="card"> <!--this works-->
-                        <div class="item item-text-wrap">
-                            This is a basic Card which contains an item that has wrapping text.
+                    <ion-content>
+                        <div class="card"> <!--this works-->
+                            <div class="item item-text-wrap">
+                                This is a basic Card which contains an item that has wrapping text.
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="card">
-                        <a class="item item-thumbnail-left">
-                            <img src="images/adele.jpg">
-                            <h2>Adele</h2>
-                            <p>21</p>
-                            <p class="subdued">1 Like</p>
-                        </a>
-                        <div class="item tabs tabs-secondary tabs-icon-left">
-                            <a class="tab-item" data-id="" ng-click="like()">
-                                <i class="icon ion-thumbsup"></i>
-                                Like
+                        <div class="card">
+                            <a class="item item-thumbnail-left">
+                                <img src="images/adele.jpg">
+                                <h2>Adele</h2>
+                                <p>21</p>
+                                <p class="subdued">1 Like</p>
                             </a>
-							<a class="tab-item" data-id="" ng-click="login()"> <!-- test function only, can put other function here-->
-								<i class="icon ion-archive"></i>
-								Rent
-							</a>
-							<a class="tab-item" data-id="" ng-click="buy()">
-								<i class="icon ion-ios7-cart" ></i>
-								Buy
-							</a>
+                            <div class="item tabs tabs-secondary tabs-icon-left">
+                                <a class="tab-item" data-id="" ng-click="like()">
+                                    <i class="icon ion-thumbsup"></i>
+                                    Like
+                                </a>
+                                <a class="tab-item" data-id="" ng-click="login()"> <!-- test function only, can put other function here-->
+                                    <i class="icon ion-archive"></i>
+                                    Rent
+                                </a>
+                                <a class="tab-item" data-id="" ng-click="buy()">
+                                    <i class="icon ion-ios7-cart" ></i>
+                                    Buy
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        TestCardList2
-                    </div>
-                    <div class="card">
-                        TestCardList3
-                    </div>
-                    <div class="card">
-                    	TestCardList4
-               
-                    	<button class="button button-positive button-small likeBtn basicForms" data-id="" ng-click="like()">
-                    		Like
-                    	</button>
-                    
-                    	<button class="button button-positive button-small rentBtn" data-id="" ng-click="rent()">
-                    		Rent
-                    	</button>             
+                        <div class="card">
+                            TestCardList2
+                        </div>
+                        <div class="card">
+                            TestCardList3
+                        </div>
+                        <div class="card">
+                            TestCardList4
 
-                    	<button class="button button-positive button-small buyBtn" data-id="" ng-click="buy()">
-                    		Buy
-                    	</button>
+                            <button class="button button-positive button-small likeBtn basicForms" data-id="" ng-click="like()">
+                                Like
+                            </button>
 
-                    </div>
+                            <button class="button button-positive button-small rentBtn" data-id="" ng-click="rent()">
+                                Rent
+                            </button>             
 
-					</ion-content>
+                            <button class="button button-positive button-small buyBtn" data-id="" ng-click="buy()">
+                                Buy
+                            </button>
+
+                        </div>
+
+                    </ion-content>
                 </ion-tab>
                 <ion-tab title="Lifestyle" icon-on="ion-briefcase" icon-off="ion-briefcase" on-select="getLifestyle()">
                     <ion-header-bar class="bar-positive">
@@ -88,8 +88,8 @@
                     </ion-header-bar>
                     <!-- Page Contents -->
                     <ion-content>
-                    <div id="lifestyleSection">
-                    </div>
+                        <div id="lifestyleSection">
+                        </div>
                     </ion-content>
                 </ion-tab>
 
@@ -100,8 +100,8 @@
                     </ion-header-bar>
                     <!-- Page Contents -->
                     <ion-content>
-                    <div id="TVSection">
-                    </div>
+                        <div id="TVSection">
+                        </div>
                     </ion-content>
                 </ion-tab>
 
@@ -112,8 +112,8 @@
                     </ion-header-bar>
                     <!-- Page Contents -->
                     <ion-content>
-                    <div id="movieSection">
-                    </div>
+                        <div id="movieSection">
+                        </div>
                     </ion-content>
                 </ion-tab>
                 <ion-tab title="Games" icon-on="ion-game-controller-a" icon-off="ion-game-controller-a" on-select="getGame()">
@@ -123,8 +123,8 @@
                     </ion-header-bar>
                     <!-- Page Contents -->
                     <ion-content>
-                    <div id="gameSection">
-                    </div>
+                        <div id="gameSection">
+                        </div>
                     </ion-content>
                 </ion-tab>
             </ion-tabs>
