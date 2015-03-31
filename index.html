@@ -42,19 +42,27 @@
                             <p class="subdued">1 Like</p>
                         </a>
                         <div class="item tabs tabs-secondary tabs-icon-left">
-                            <a class="tab-item">
+                            <a class="tab-item" data-id="" ng-click="like()">
                                 <i class="icon ion-thumbsup"></i>
                                 Like
                             </a>
+							<a class="tab-item" data-id="" ng-click="login()"> <!-- test function only, can put other function here-->
+								<i class="icon ion-archive"></i>
+								Rent
+							</a>
+							<a class="tab-item" data-id="" ng-click="buy()">
+								<i class="icon ion-ios7-cart" ></i>
+								Buy
+							</a>
                         </div>
                     </div>
-                    <div class="item item-text-wrap">
+                    <div class="card">
                         TestCardList2
                     </div>
-                    <div class="item item-text-wrap">
+                    <div class="card">
                         TestCardList3
                     </div>
-                    <div class="item item-text-wrap">
+                    <div class="card">
                     	TestCardList4
                
                     	<button class="button button-positive button-small likeBtn basicForms" data-id="" ng-click="like()">
