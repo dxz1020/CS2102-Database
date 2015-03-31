@@ -27,6 +27,10 @@
   }
 
   function processPurchase(){
+    if($_SERVER['REQUEST_METHOD']!='POST'){
+      http_response_code(400);
+      return;
+    }
     $dbh = connectToDatabase();
     closeConnection($dbh);
     echo 'Purchased';
@@ -45,9 +49,26 @@
   }
 
   function processLike(){
+    if($_SERVER['REQUEST_METHOD']!='POST'){
+      http_response_code(400);
+      return;
+    }
+
+    $params = json_decode(file_get_contents('php://input'), true);
+    if(!isset($params['itemid'])){
+      http_response_code(400);
+      return;
+    }
+
     $dbh = connectToDatabase();
+    $query = "INSERT INTO Likes VALUES(:email, :itemid)";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $_SESSION['email']);
+    oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_execute($stmt);
+    echo 'Like added.';
+    oci_free_statement($stmt);
     closeConnection($dbh);
-    echo 'Liked item';
   }
 
   function processUnlike(){
@@ -57,8 +78,6 @@
   }
 
   session_start();
-
-  echo isset($_SESSION['email'])? 'YES': 'NO';
 
   //Forbid access if user is not logged in properly.
   if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
