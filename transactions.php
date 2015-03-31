@@ -85,9 +85,25 @@
   }
 
   function processUnlike(){
-    $dbh = conenctToDatabase();
+    if($_SERVER['REQUEST_METHOD']!='POST'){
+      http_response_code(400);
+      return;
+    }
+
+    $params = json_decode(file_get_contents('php://input'), true);
+    if(!isset($params['itemid'])){
+      http_response_code(400);
+      return;
+    }
+
+    $dbh = connectToDatabase();
+    $query = "DELETE FROM Likes WHERE customer=:email AND item=:itemid";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $_SESSION['email']);
+    oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
     closeConnection($dbh);
-    echo 'Unliked item';
   }
 
   session_start();
