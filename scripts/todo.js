@@ -114,7 +114,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			alert("Thank you for liking the item");
-		       
+		    document.location.href='';   
 		})
 		.fail(function(msg) {
 			alert("You have either liked this item or you aren't signed in"); 
@@ -135,7 +135,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			alert("You have purchased the item");
-		       
+		    document.location.href='';   
 		})
 		.fail(function(msg) {
 			alert("You have either bought this item or you aren't signed in"); 
@@ -143,7 +143,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 	};
 
 	/*
-	$scope.rent = function(item, itemname) {
+	$scope.rent = function(item) {
 
 		id = {
 			'itemid' : item
@@ -152,15 +152,14 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		
 		$.ajax({
 			method: "POST",
-			url: "transactions.php?type=like",
+			url: "transactions.php?type=rent",
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			alert("You have liked " + item);
-		       
+			alert("You have rented " + item);		       
 		})
 		.fail(function(msg) {
-			alert("You have either liked this item or you aren't signed in"); 
+			alert("You have either rented this item or you aren't signed in"); 
 		});
 	};*/
 
