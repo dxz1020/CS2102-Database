@@ -24,7 +24,10 @@
                     <ion-header-bar class="bar-positive">
                         <button class="button button-positive" ng-click="toggleLeft()">Options</button>
                         <h1 class="title">Home</h1>
-                        <button class="button button-positive" ng-click="login()">login</button>
+
+                        <button class="button button-balanced login-btn" ng-click="login()">Login</button>
+                        <button class="button button-assertive logout-btn" ng-click="logout()">Logout</button>                
+
                     </ion-header-bar>
                     <!-- start of tab contents, write page contents below this-->                    
                     <ion-content>
@@ -56,14 +59,9 @@
                                 </a>
                             </div>
                         </div>
+
                         <div class="card">
-                            TestCardList2
-                        </div>
-                        <div class="card">
-                            TestCardList3
-                        </div>
-                        <div class="card">
-                            TestCardList4
+                            Testing Card 
 
                             <button class="button button-positive button-small likeBtn basicForms" data-id="" ng-click="like()">
                                 Like
@@ -88,8 +86,8 @@
                     </ion-header-bar>
                     <!-- Page Contents -->
                     <ion-content>
-                        <div id="lifestyleSection">
-                        </div>
+                        <dir id="lifestyleSection" content="lifestyleContent">
+                        </dir>
                     </ion-content>
                 </ion-tab>
 
@@ -100,8 +98,8 @@
                     </ion-header-bar>
                     <!-- Page Contents -->
                     <ion-content>
-                        <div id="TVSection">
-                        </div>
+                        <dir id="TVSection" content="tvContent">
+                        </dir>
                     </ion-content>
                 </ion-tab>
 
@@ -112,8 +110,8 @@
                     </ion-header-bar>
                     <!-- Page Contents -->
                     <ion-content>
-                        <div id="movieSection">
-                        </div>
+                        <dir id="movieSection" content="movieContent">
+                        </dir>
                     </ion-content>
                 </ion-tab>
                 <ion-tab title="Games" icon-on="ion-game-controller-a" icon-off="ion-game-controller-a" on-select="getGame()">
@@ -123,8 +121,8 @@
                     </ion-header-bar>
                     <!-- Page Contents -->
                     <ion-content>
-                        <div id="gameSection">
-                        </div>
+                        <dir id="gameSection" content="gameContent">
+                        </dir>
                     </ion-content>
                 </ion-tab>
             </ion-tabs>

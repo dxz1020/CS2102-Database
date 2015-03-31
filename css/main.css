@@ -1,5 +1,5 @@
-.buyBtn .rentBtn .likeBtn {
-
+.login-btn, .logout-btn {
+	float:right;
 }
 
 .basicForms {

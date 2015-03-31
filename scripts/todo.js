@@ -13,6 +13,19 @@ myApp.controller('storeCtrl', function($scope, $ionicModal, $ionicPopup){
 	$scope.close = function(){
 		$scope.taskModal.hide();
 	}
+
+	$scope.logout = function(){		
+		$.ajax({
+			method: "GET",
+			url: "logout.php"
+		})
+		.done(function( msg ) {
+			alert( "You have successfully logged out");					 
+		})
+		.fail(function(msg) {
+			console.log("error"); 
+		});
+	};
 });
 
 function ContentController($scope, $ionicSideMenuDelegate) {
@@ -29,8 +42,9 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			var listOfApps = JSON.parse(msg);
-			renderSection(listOfApps, "lifestyleSection");   
+			$scope.lifestyleContent = renderSection(listOfApps, "lifestyleSection"); 
 		})
+
 		.fail(function(msg) {
 			console.log("failed"); 
 		});
@@ -45,7 +59,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			var listOfMovie = JSON.parse(msg);
-			renderSection(listOfMovie, "movieSection");       
+			$scope.movieContent = renderSection(listOfMovie, "movieSection");       
 		})
 		.fail(function(msg) {
 			console.log("failed"); 
@@ -61,7 +75,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			var listOfTV = JSON.parse(msg);
-			renderSection(listOfTV, "TVSection"); 
+			$scope.tvContent = renderSection(listOfTV, "TVSection"); 
 			//checkArr(listOfTV);       
 		})
 		.fail(function(msg) {
@@ -78,7 +92,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			var listOfGame = JSON.parse(msg);
-			renderSection(listOfGame, "gameSection"); 
+			$scope.gameContent = renderSection(listOfGame, "gameSection"); 
 			//checkArr(listOfGame);      
 		})
 		.fail(function(msg) {
@@ -86,10 +100,10 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		});
 	};
 
-	$scope.like = function() {
+	$scope.like = function(item) {
 
 		id = {
-			'itemid' : 50
+			'itemid' : item
 		};
 		var itemIdJSON = JSON.stringify(id);
 		
@@ -99,21 +113,70 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			console.log("You have liked the item");
-			//pop up dialog       
+			alert("Thank you for liking the item");
+		       
 		})
 		.fail(function(msg) {
-			console.log("failed in like function"); 
+			alert("You have either liked this item or you aren't signed in"); 
 		});
 	};
 
-	
-	$(function() {
-	  $('.likeBtn').on('click', function(e){
-	  	alert("hello");
-	  });
-	});
+	$scope.buy = function(item) {
+
+		id = {
+			'itemid' : item
+		};
+		var itemIdJSON = JSON.stringify(id);
+		
+		$.ajax({
+			method: "POST",
+			url: "transactions.php?type=buy",
+			data: itemIdJSON
+		})
+		.done(function(msg) {
+			alert("You have purchased the item");
+		       
+		})
+		.fail(function(msg) {
+			alert("You have either bought this item or you aren't signed in"); 
+		});
+	};
+
+	/*
+	$scope.rent = function(item, itemname) {
+
+		id = {
+			'itemid' : item
+		};
+		var itemIdJSON = JSON.stringify(id);
+		
+		$.ajax({
+			method: "POST",
+			url: "transactions.php?type=like",
+			data: itemIdJSON
+		})
+		.done(function(msg) {
+			alert("You have liked " + item);
+		       
+		})
+		.fail(function(msg) {
+			alert("You have either liked this item or you aren't signed in"); 
+		});
+	};*/
+
 }
+
+myApp.directive('dir', function($compile, $parse) {
+    return {
+      restrict: 'E',
+      link: function(scope, element, attr) {
+        scope.$watch(attr.content, function() {
+          element.html($parse(attr.content)(scope)); //changes the html inside
+          $compile(element.contents())(scope);
+        }, true);
+      }
+    }
+  })
 
 function checkArr(arr){
  for(var i = 0 ; i < arr.length ; i++) 
@@ -137,25 +200,33 @@ function renderSection(arr, type){
 		"Release: " + arr[i].RELEASE_DATE + 
 		
 
-        '<button class="button button-positive button-small likeBtn basicForms" ng-click="like()" data-id="' + arr[i].ITEM_ID + '">' +           	
-    	'Like it now ' + arr[i].LIKES +'</button>' +    	
+        '<button class="button button-positive button-small likeBtn basicForms" ng-click="like(' + arr[i].ITEM_ID + ')">' +           	
+    	'Like it  ' + arr[i].LIKES +'</button>' +    	
     	
-        '<button class="button button-positive button-small rentBtn basicForms" ng-click="rent()" data-id="' + arr[i].ITEM_ID + '">' +          	
+        '<button class="button button-positive button-small rentBtn basicForms" ng-click="rent(' + arr[i].ITEM_ID + ')">' +          	
     	'Rent </button>' +
 
-        '<button class="button button-positive button-small buyBtn basicForms" ng-click="buy()" data-id="' + arr[i].ITEM_ID + '">' +           	
+        '<button class="button button-positive button-small buyBtn basicForms" ng-click="buy(' + arr[i].ITEM_ID + ')">' +           	
     	"Buy </button></form></div>"; 
 	
 	}
-	document.getElementById(type).innerHTML= string;
+	//document.getElementById(type).innerHTML= string;
+	return string; 
 }
 
+/*
+$(function() {
+  $('.likeBtn').on('click', function(e){
+  	alert("jqueryf working");
+  });
+});*/
 
 myApp.controller('LoginController', ['$scope', function($scope) {
   	
   	$scope.login = function(){
 		$scope.taskModal.show();
 	};
+
 	$scope.close = function(){
 		$scope.taskModal.hide();
 	}
@@ -180,10 +251,10 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 		})
 		.done(function( msg ) {
 			if(msg==1){
-				console.log( "Login successful");
+				alert( "Login successful");
 			}
 			else {
-				console.log( "Verification failed");
+				alert( "Verification failed");
 			}
 					 
 		})
