@@ -61,12 +61,25 @@
     }
 
     $dbh = connectToDatabase();
-    $query = "INSERT INTO Likes VALUES(:email, :itemid)";
+
+    //Checks if the entry to be inserted already exists.
+    $query = "SELECT * FROM Likes WHERE customer=:email AND item=:itemid";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":email", $_SESSION['email']);
     oci_bind_by_name($stmt, ":itemid", $params['itemid']);
     oci_execute($stmt);
-    echo 'Like added.';
+    if($row = oci_fetch_assoc($stmt)){ //If the entry exists, return.
+      oci_free_statement($stmt);
+      closeConnection($dbh);
+      return;
+    }
+    oci_free_statement($stmt); //Free resources.
+
+    $query = "INSERT INTO Likes VALUES(:email, :itemid)"; //Actual query
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $_SESSION['email']);
+    oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_execute($stmt);
     oci_free_statement($stmt);
     closeConnection($dbh);
   }
