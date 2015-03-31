@@ -31,9 +31,38 @@
       http_response_code(400);
       return;
     }
+
+    $params = json_decode(file_get_contents('php://input'), true);
+    if(!isset($params['itemid'])){
+      http_response_code(400);
+      return;
+    }
+    $purchase_date = date("Y-m-d");
+
     $dbh = connectToDatabase();
+    
+    //Checks if user has already purchased this item.
+    $query = "SELECT * FROM Purchase WHERE customer=:email AND item=:itemid";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $_SESSION['email']);
+    oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_execute($stmt);
+    if($row = oci_fetch_assoc($stmt)){ //If user already purchased item
+      oci_free_statement($stmt);
+      closeConnection($dbh);
+      return;
+    }
+    oci_free_statement($stmt);
+
+    //Actual query
+    $query = "INSERT INTO Purchase VALUES(:email, :itemid, to_date(:pdate, 'yyyy-mm-dd'))";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $_SESSION['email']);
+    oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_bind_by_name($stmt, ":pdate", $purchase_date);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
     closeConnection($dbh);
-    echo 'Purchased';
   }
 
   function processRent(){
@@ -120,6 +149,8 @@
     http_response_code(400);
     exit(0);
   }
+
+  date_default_timezone_set('Asia/Singapore');
 
   switch($_GET['type']){
     case 'buy': processPurchase(); break;
