@@ -6,3 +6,7 @@
 	display:inline;
 	float:right;
 }
+
+.hiddenModel {
+	display: none;
+}

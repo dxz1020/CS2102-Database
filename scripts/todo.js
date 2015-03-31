@@ -87,9 +87,9 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 	};
 
 	$scope.like = function() {
-		//alert("hello");
+
 		id = {
-			'itemid' : 92
+			'itemid' : 50
 		};
 		var itemIdJSON = JSON.stringify(id);
 		
@@ -99,12 +99,20 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			console.log("You have liked the item");       
+			console.log("You have liked the item");
+			//pop up dialog       
 		})
 		.fail(function(msg) {
 			console.log("failed in like function"); 
 		});
 	};
+
+	
+	$(function() {
+	  $('.likeBtn').on('click', function(e){
+	  	alert("hello");
+	  });
+	});
 }
 
 function checkArr(arr){
@@ -127,7 +135,17 @@ function renderSection(arr, type){
 		"Price: " + arr[i].PRICE + "<br />" +
 		"Rent: " + arr[i].RENT_PRICE + "<br />" +
 		"Release: " + arr[i].RELEASE_DATE + 
-		'</div>' ;  
+		
+
+        '<button class="button button-positive button-small likeBtn basicForms" ng-click="like()" data-id="' + arr[i].ITEM_ID + '">' +           	
+    	'Like it now ' + arr[i].LIKES +'</button>' +    	
+    	
+        '<button class="button button-positive button-small rentBtn basicForms" ng-click="rent()" data-id="' + arr[i].ITEM_ID + '">' +          	
+    	'Rent </button>' +
+
+        '<button class="button button-positive button-small buyBtn basicForms" ng-click="buy()" data-id="' + arr[i].ITEM_ID + '">' +           	
+    	"Buy </button></form></div>"; 
+	
 	}
 	document.getElementById(type).innerHTML= string;
 }
@@ -175,4 +193,5 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 	};
 
 }]);
+
 
