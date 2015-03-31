@@ -189,37 +189,40 @@ function renderSection(arr, type){
 	for(var i=0;i<arr.length;i++){
 
 		string +=
-		'<div class="item item-text-wrap">' +
+		'<div class="card">' +
 		"Title: " + arr[i].TITLE + "<br />" +
 		"Category: " + arr[i].CATEGORY + "<br />" +
 		"Genre: " + arr[i].GENRE + "<br />" +
 		"Device: " + arr[i].DEVICE + "<br />" +
-		"Likes: " + arr[i].LIKES + "<br />" +
+		//"Likes: " + arr[i].LIKES + "<br />" +
 		"Price: " + arr[i].PRICE + "<br />" +
 		"Rent: " + arr[i].RENT_PRICE + "<br />" +
 		"Release: " + arr[i].RELEASE_DATE + 
 		
 
-        '<button class="button button-positive button-small likeBtn basicForms" ng-click="like(' + arr[i].ITEM_ID + ')">' +           	
+        /*'<button class="button button-positive button-small likeBtn basicForms" ng-click="like(' + arr[i].ITEM_ID + ')">' +           	
     	'Like it  ' + arr[i].LIKES +'</button>' +    	
     	
         '<button class="button button-positive button-small rentBtn basicForms" ng-click="rent(' + arr[i].ITEM_ID + ')">' +          	
     	'Rent </button>' +
 
         '<button class="button button-positive button-small buyBtn basicForms" ng-click="buy(' + arr[i].ITEM_ID + ')">' +           	
-    	"Buy </button></form></div>"; 
-	
+    	"Buy </button></form></div>"; */
+	                      
+
+        '<div class="item tabs tabs-secondary tabs-icon-left">' +
+        '<a class="tab-item" ng-click="like(' + arr[i].ITEM_ID + ')">' +
+        '<i class="icon ion-thumbsup"></i> Likes '+ arr[i].LIKES + '</a>' +
+        '<a class="tab-item" ng-click="rent(' + arr[i].ITEM_ID + ')">' +
+        '<i class="icon ion-archive"></i> Rent </a> ' +
+        '<a class="tab-item" ng-click="buy(' + arr[i].ITEM_ID + ')">' +
+        '<i class="icon ion-ios7-cart"></i> Buy </a>' +
+        '</div></div>'
+
 	}
 	//document.getElementById(type).innerHTML= string;
 	return string; 
 }
-
-/*
-$(function() {
-  $('.likeBtn').on('click', function(e){
-  	alert("jqueryf working");
-  });
-});*/
 
 myApp.controller('LoginController', ['$scope', function($scope) {
   	
