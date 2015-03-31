@@ -5,6 +5,7 @@
         <title>Digital Content Store</title>
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <link rel="stylesheet" href="lib/css/ionic.min.css">
+		<link rel="stylesheet" href="css/main.css">
 
         <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>        
@@ -27,7 +28,7 @@
                     </ion-header-bar>
                     <!-- start of tab contents, write page contents below this-->                    
 					<ion-content>
-                    <div class="card"  onclick="getApp()"> <!--this works-->
+                    <div class="card"> <!--this works-->
                         <div class="item item-text-wrap">
                             This is a basic Card which contains an item that has wrapping text.
                         </div>
@@ -47,24 +48,35 @@
                             </a>
                         </div>
                     </div>
-                    <div class="item item-text-wrap" onclick="getApp()">
+                    <div class="item item-text-wrap">
                         TestCardList2
                     </div>
-                    <div class="item item-text-wrap" onclick="getApp()">
+                    <div class="item item-text-wrap">
                         TestCardList3
                     </div>
-					<div class="item item-text-wrap" onclick="getApp()">
-                        TestCardList3
+                    <div class="item item-text-wrap">
+                    	TestCardList4
+                    	
+                    	<form id="likeForm" class="basicForms" ng-submit="like()">
+                    	<button class="button button-positive button-small likeBtn" data-id="">
+                    		Like
+                    	</button>
+                    	</form>
+                    	
+                    	<form id="rentForm" class="basicForms" ng-submit="rent()">
+                    	<button class="button button-positive button-small rentBtn" data-id="">
+                    		Rent
+                    	</button>             
+                    	</form>
+                    	
+                    	<form id="buyForm" class="basicForms" ng-submit="buy()">
+                    	<button class="button button-positive button-small buyBtn" data-id="" >
+                    		Buy
+                    	</button>
+                    	</form>
+
                     </div>
-					<div class="item item-text-wrap" onclick="getApp()">
-                        TestCardList3
-                    </div>
-					<div class="item item-text-wrap" onclick="getApp()">
-                        TestCardList3
-                    </div>
-					<div class="item item-text-wrap" onclick="getApp()">
-                        TestCardList3
-                    </div>
+
 					</ion-content>
                 </ion-tab>
                 <ion-tab title="Lifestyle" icon-on="ion-briefcase" icon-off="ion-briefcase" on-select="getLifestyle()">

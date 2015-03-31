@@ -79,10 +79,30 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		.done(function(msg) {
 			var listOfGame = JSON.parse(msg);
 			renderSection(listOfGame, "gameSection"); 
-			//checkArr(listOfGame);       
+			//checkArr(listOfGame);      
 		})
 		.fail(function(msg) {
 			console.log("failed "); 
+		});
+	};
+
+	$scope.like = function() {
+		//alert("hello");
+		id = {
+			'itemid' : 92
+		};
+		var itemIdJSON = JSON.stringify(id);
+		
+		$.ajax({
+			method: "POST",
+			url: "transactions.php?type=like",
+			data: itemIdJSON
+		})
+		.done(function(msg) {
+			console.log("You have liked the item");       
+		})
+		.fail(function(msg) {
+			console.log("failed in like function"); 
 		});
 	};
 }
