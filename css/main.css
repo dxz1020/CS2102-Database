@@ -10,3 +10,7 @@
 .hiddenModel {
 	display: none;
 }
+
+.red-btn {
+	background-color: red;
+}

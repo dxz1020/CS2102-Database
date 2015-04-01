@@ -38,8 +38,8 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			method: "GET",
 			url: "search.php",
 			data: { category: 'App'
-			}
-		})
+		}
+	})
 		.done(function(msg) {
 			var listOfApps = JSON.parse(msg);
 			$scope.lifestyleContent = renderSection(listOfApps, "lifestyleSection"); 
@@ -55,8 +55,8 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			method: "GET",
 			url: "search.php",
 			data: { category: "Movie"
-			}
-		})
+		}
+	})
 		.done(function(msg) {
 			var listOfMovie = JSON.parse(msg);
 			$scope.movieContent = renderSection(listOfMovie, "movieSection");       
@@ -72,7 +72,7 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			url: "search.php",
 			data: { category: "TV"
 		}
-		})
+	})
 		.done(function(msg) {
 			var listOfTV = JSON.parse(msg);
 			$scope.tvContent = renderSection(listOfTV, "TVSection"); 
@@ -88,8 +88,8 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			method: "GET",
 			url: "search.php",
 			data: { category: "Game"
-			}
-		})
+		}
+	})
 		.done(function(msg) {
 			var listOfGame = JSON.parse(msg);
 			$scope.gameContent = renderSection(listOfGame, "gameSection"); 
@@ -114,7 +114,9 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		})
 		.done(function(msg) {
 			alert("Thank you for liking the item");
-		    document.location.href='';   
+			var beforeLike = parseInt($('#' +item).html());
+			$('#' +item).html(beforeLike+1);
+			//document.location.href='';   
 		})
 		.fail(function(msg) {
 			alert("You have either liked this item or you aren't signed in"); 
@@ -127,15 +129,15 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			'itemid' : item
 		};
 		var itemIdJSON = JSON.stringify(id);
-		
+
 		$.ajax({
 			method: "POST",
 			url: "transactions.php?type=buy",
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			alert("You have purchased the item");
-		    document.location.href='';   
+			alert("You have successfully purchased the item");
+			//document.location.href='';   
 		})
 		.fail(function(msg) {
 			alert("You have either bought this item or you aren't signed in"); 
@@ -161,25 +163,25 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 		.fail(function(msg) {
 			alert("You have either rented this item or you aren't signed in"); 
 		});
-	};*/
+};*/
 
 }
 
 myApp.directive('dir', function($compile, $parse) {
-    return {
-      restrict: 'E',
-      link: function(scope, element, attr) {
-        scope.$watch(attr.content, function() {
+	return {
+		restrict: 'E',
+		link: function(scope, element, attr) {
+			scope.$watch(attr.content, function() {
           element.html($parse(attr.content)(scope)); //changes the html inside
           $compile(element.contents())(scope);
-        }, true);
-      }
-    }
-  })
+      }, true);
+		}
+	}
+})
 
 function checkArr(arr){
- for(var i = 0 ; i < arr.length ; i++) 
-  console.log(arr[i]);
+	for(var i = 0 ; i < arr.length ; i++) 
+		console.log(arr[i]);
 }
 
 function renderSection(arr, type){
@@ -206,26 +208,44 @@ function renderSection(arr, type){
     	'Rent </button>' +
 
         '<button class="button button-positive button-small buyBtn basicForms" ng-click="buy(' + arr[i].ITEM_ID + ')">' +           	
-    	"Buy </button></form></div>"; */
-	                      
+        "Buy </button></form></div>"; */
+
 
         '<div class="item tabs tabs-secondary tabs-icon-left">' +
         '<a class="tab-item" ng-click="like(' + arr[i].ITEM_ID + ')">' +
-        '<i class="icon ion-thumbsup"></i> Likes '+ arr[i].LIKES + '</a>' +
+        '<i class="icon ion-thumbsup"></i> Likes <span id=' + arr[i].ITEM_ID + '>'+ arr[i].LIKES + '</span></a>' +
         '<a class="tab-item" ng-click="rent(' + arr[i].ITEM_ID + ')">' +
         '<i class="icon ion-archive"></i> Rent </a> ' +
         '<a class="tab-item" ng-click="buy(' + arr[i].ITEM_ID + ')">' +
         '<i class="icon ion-ios7-cart"></i> Buy </a>' +
         '</div></div>'
 
-	}
+    }
 	//document.getElementById(type).innerHTML= string;
 	return string; 
 }
 
+function textBoxSearch(){
+
+	var userInput = "lord";
+	$.ajax({
+			method: "GET",
+			url: "search.php",
+			data: { title: "Movie"
+				  }
+		})
+		.done(function(msg) {
+			var listOfMovie = JSON.parse(msg);
+			$scope.movieContent = renderSection(listOfMovie, "movieSection");       
+		})
+		.fail(function(msg) {
+			console.log("failed"); 
+		});
+}
+
 myApp.controller('LoginController', ['$scope', function($scope) {
-  	
-  	$scope.login = function(){
+
+	$scope.login = function(){
 		$scope.taskModal.show();
 	};
 
@@ -242,7 +262,7 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 		info = {
 			'email' : name,
 			'password' : pw
-			};
+		};
 
 		var infoJSON = JSON.stringify(info);
 
@@ -253,12 +273,19 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 		})
 		.done(function( msg ) {
 			if(msg==1){
-				alert( "Login successful");
+				//Ask zixian to pass me name
+				alert( "LOGIN SUCCESSFUL");
+				$('.logout-btn').css({
+					"background-color": "#ef4e3a",
+					"border-color": "#cc2311"
+				});
+
+				$('.title').html("Greetings, Peasants");
 			}
 			else {
 				alert( "Verification failed");
 			}
-					 
+
 		})
 		.fail(function(msg) {
 			console.log("error"); 
