@@ -19,7 +19,7 @@
 
   $param_array = array(); //The array of conditionals for query statement
   if(isset($_GET['title']))
-    array_push($param_array, "title='".$_GET['title']."'");
+    array_push($param_array, "title LIKE '%".$_GET['title']."%'");
   if(isset($_GET['category']))
     array_push($param_array, "category='".$_GET['category']."'");
   if(isset($_GET['genre']))
