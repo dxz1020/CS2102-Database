@@ -164,7 +164,6 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			alert("You have either rented this item or you aren't signed in"); 
 		});
 };*/
-
 }
 
 myApp.directive('dir', function($compile, $parse) {
@@ -225,24 +224,6 @@ function renderSection(arr, type){
 	return string; 
 }
 
-function textBoxSearch(){
-
-	var userInput = "lord";
-	$.ajax({
-			method: "GET",
-			url: "search.php",
-			data: { title: "Movie"
-				  }
-		})
-		.done(function(msg) {
-			var listOfMovie = JSON.parse(msg);
-			$scope.movieContent = renderSection(listOfMovie, "movieSection");       
-		})
-		.fail(function(msg) {
-			console.log("failed"); 
-		});
-}
-
 myApp.controller('LoginController', ['$scope', function($scope) {
 
 	$scope.login = function(){
@@ -293,5 +274,42 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 	};
 
 }]);
+
+myApp.controller('SearchController', ['$scope', function($scope) {
+
+	$scope.query = function(queryString) {
+		
+		queryString; 
+
+		$.ajax({
+			method: "GET",
+			url: "search.php",
+			data: { title: queryString
+			}
+		})
+		.done(function(msg) {
+			var listOfMatches = JSON.parse(msg);
+			console.log(listOfMatches);
+			var scope = angular.element($("#mainContent")).scope();
+			scope.$apply(function(){
+				if (listOfMatches.length == 0) {
+					scope.maincontents = "Sorry, no results found";
+				} else {
+					scope.maincontents = renderSection(listOfMatches);
+				}
+			})
+			   
+		})
+		.fail(function(msg) {
+			console.log("failed"); 
+		});
+	};
+
+}]);
+
+
+
+
+
 
 

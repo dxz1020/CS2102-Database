@@ -75,7 +75,8 @@
                             </button>
 
                         </div>
-
+                        <dir id="mainContent" content="maincontents">
+                        </dir>
                     </ion-content>
                 </ion-tab>
                 <ion-tab title="Lifestyle" icon-on="ion-briefcase" icon-off="ion-briefcase" on-select="getLifestyle()">
@@ -129,10 +130,11 @@
 
         <ion-side-menu side="left">
             <!-- Left content -->
-            <div class="list list-inset">
-                <form class="item item-input" action="textBoxSearch()">
+            <div class="list list-inset" ng-controller = "SearchController">
+                <form class="item item-input" id="searchBox">
                     <i class="icon ion-search placeholder-icon"></i>
-                    <input type="text" placeholder="Search">
+                    <input type="text" id="query" placeholder="Search" ng-model="queryString">
+                    <input type="submit" ng-click="query(queryString)" style="display:none;">
                 </form>
             </div>
             <ul class="list">
