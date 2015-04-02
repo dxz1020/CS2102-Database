@@ -23,7 +23,7 @@
                 <ion-tab title="Home" icon-on="ion-home" icon-off="ion-home" on-select="">
                     <ion-header-bar class="bar-positive">
                         <button class="button button-positive" ng-click="toggleLeft()">Options</button>
-                        <h1 style="display:inline-block;" class="title">Home</h1>
+                        <h1 style="display:inline-block;" class="title" id="dynamictitle" ng-bind="name"></h1>
                         <button class="button button-balanced login-btn" ng-click="login()">Login</button>
                         <button class="button button-dark logout-btn" ng-click="logout()">Logout</button>                
 
@@ -60,21 +60,9 @@
                         </div>
 
                         <div class="card">
-                            Testing Card 
-
-                            <button class="button button-positive button-small likeBtn basicForms" data-id="" ng-click="like()">
-                                Like
-                            </button>
-
-                            <button class="button button-positive button-small rentBtn" data-id="" ng-click="rent()">
-                                Rent
-                            </button>             
-
-                            <button class="button button-positive button-small buyBtn" data-id="" ng-click="buy()">
-                                Buy
-                            </button>
-
+                            
                         </div>
+                        
                         <dir id="mainContent" content="maincontents">
                         </dir>
                     </ion-content>
@@ -182,7 +170,7 @@
             <input type="text" name="email" placeholder="Username">
             </label>
             <label class="item item-input"> 
-            <input type="text" name="password" placeholder="Password">
+            <input type="password" name="password" placeholder="Password">
             </label>
             </div>
             <div class="padding">

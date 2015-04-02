@@ -28,7 +28,10 @@ myApp.controller('storeCtrl', function($scope, $ionicModal, $ionicPopup){
 	};
 });
 
-function ContentController($scope, $ionicSideMenuDelegate) {
+function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
+
+	$scope.name = 'Digital Content Store';
+
 	$scope.toggleLeft = function() {
 		$ionicSideMenuDelegate.toggleLeft();
 	};
@@ -119,7 +122,14 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			//document.location.href='';   
 		})
 		.fail(function(msg) {
-			alert("You have either liked this item or you aren't signed in"); 
+			
+			var alertPopup = $ionicPopup.alert({
+				title: 'Issue',
+				template: "You have either liked this item or you aren't signed in"
+			});
+			alertPopup.then(function(res) {
+				console.log("You have either liked this item or you aren't signed in");
+			});
 		});
 	};
 
@@ -136,11 +146,23 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			alert("You have successfully purchased the item");
+			var alertPopup = $ionicPopup.alert({
+				title: 'Issue',
+				template: "You have successfully purchased the item"
+			});
+			alertPopup.then(function(res) {
+				console.log("You have successfully purchased the item");
+			});
 			//document.location.href='';   
 		})
 		.fail(function(msg) {
-			alert("You have either bought this item or you aren't signed in"); 
+			var alertPopup = $ionicPopup.alert({
+				title: 'Issue',
+				template: "You have either bought this item or you aren't signed in"
+			});
+			alertPopup.then(function(res) {
+				console.log("You have either bought this item or you aren't signed in");
+			});
 		});
 	};
 
@@ -161,7 +183,13 @@ function ContentController($scope, $ionicSideMenuDelegate) {
 			alert("You have rented " + item);		       
 		})
 		.fail(function(msg) {
-			alert("You have either rented this item or you aren't signed in"); 
+			var alertPopup = $ionicPopup.alert({
+				title: 'Issue',
+				template: "You have either rented this item or you aren't signed in"
+			});
+			alertPopup.then(function(res) {
+				console.log("You have either rented this item or you aren't signed in");
+			});
 		});
 };*/
 }
@@ -190,15 +218,16 @@ function renderSection(arr, type){
 
 		string +=
 		'<div class="card">' +
-		"Title: " + arr[i].TITLE + "<br />" +
-		"Category: " + arr[i].CATEGORY + "<br />" +
-		"Genre: " + arr[i].GENRE + "<br />" +
-		"Device: " + arr[i].DEVICE + "<br />" +
+		'<div class="item item-text-wrap">' +
+		"<b>Title</b>: " + arr[i].TITLE + "<br />" +
+		"<b>Category</b>: " + arr[i].CATEGORY + "<br />" +
+		"<b>Genre</b>: " + arr[i].GENRE + "<br />" +
+		"<b>Device</b>: " + arr[i].DEVICE + "<br />" +
 		//"Likes: " + arr[i].LIKES + "<br />" +
-		"Price: " + arr[i].PRICE + "<br />" +
-		"Rent: " + arr[i].RENT_PRICE + "<br />" +
-		"Release: " + arr[i].RELEASE_DATE + 
-		
+		"<b>Price</b>: $" + arr[i].PRICE + ".00<br />" +
+		"<b>Rent</b>: $" + arr[i].RENT_PRICE + ".00<br />" +
+		"<b>Release</b>: " + arr[i].RELEASE_DATE + 
+		'</div>' +
 
         /*'<button class="button button-positive button-small likeBtn basicForms" ng-click="like(' + arr[i].ITEM_ID + ')">' +           	
     	'Like it  ' + arr[i].LIKES +'</button>' +    	
@@ -225,7 +254,7 @@ function renderSection(arr, type){
 }
 
 myApp.controller('LoginController', ['$scope', function($scope) {
-
+	
 	$scope.login = function(){
 		$scope.taskModal.show();
 	};
@@ -255,16 +284,20 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 		.done(function( msg ) {
 			if(msg==1){
 				//Ask zixian to pass me name
-				alert( "LOGIN SUCCESSFUL");
+				alert("Login Successful");
 				$('.logout-btn').css({
 					"background-color": "#ef4e3a",
 					"border-color": "#cc2311"
 				});
-
-				$('.title').html("Greetings, Peasants");
+				
+				var bigscope = angular.element($("#dynamictitle")).scope();
+				bigscope.$apply(function(){
+					bigscope.name = "Welcome, user ABC";
+					//$('.title').html("Greetings, Peasants");
+				})
 			}
 			else {
-				alert( "Verification failed");
+				alert("Verification failed");
 			}
 
 		})
@@ -298,7 +331,7 @@ myApp.controller('SearchController', ['$scope', function($scope) {
 					scope.maincontents = renderSection(listOfMatches);
 				}
 			})
-			   
+
 		})
 		.fail(function(msg) {
 			console.log("failed"); 
