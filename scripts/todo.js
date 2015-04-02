@@ -229,16 +229,6 @@ function renderSection(arr, type){
 		"<b>Release</b>: " + arr[i].RELEASE_DATE + 
 		'</div>' +
 
-        /*'<button class="button button-positive button-small likeBtn basicForms" ng-click="like(' + arr[i].ITEM_ID + ')">' +           	
-    	'Like it  ' + arr[i].LIKES +'</button>' +    	
-    	
-        '<button class="button button-positive button-small rentBtn basicForms" ng-click="rent(' + arr[i].ITEM_ID + ')">' +          	
-    	'Rent </button>' +
-
-        '<button class="button button-positive button-small buyBtn basicForms" ng-click="buy(' + arr[i].ITEM_ID + ')">' +           	
-        "Buy </button></form></div>"; */
-
-
         '<div class="item tabs tabs-secondary tabs-icon-left">' +
         '<a class="tab-item" ng-click="like(' + arr[i].ITEM_ID + ')">' +
         '<i class="icon ion-thumbsup"></i> Likes <span id=' + arr[i].ITEM_ID + '>'+ arr[i].LIKES + '</span></a>' +
