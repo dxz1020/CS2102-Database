@@ -25,22 +25,28 @@
   }
 
   function addItem(){
-    if($_SERVER['REQUEST_METHOD']!='POST'){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
 
     $params = json_decode(file_get_contents('php://input'), true);
-    if(!isset($params['itemid'])){
-      echo !isset($params['itemid']);
+    if(!isset($params['itemid']) || !isset($params['title']) ||
+	!isset($params['category']) || !isset($params['genre']) ||
+	!isset($params['device']) || !isset($params['rdate']) ||
+	!isset($params['price']) || !isset($params['rent'])){
       http_response_code(400);
       return;
     }
-    $release_date = date("Y-m-d");
+
+    //There is a chance that some old content may be put up.
+    //$release_date = date("Y-m-d");
+
     $dbh = connectToDatabase();
 
     //Actual Insertion
-    $query = "INSERT INTO Item VALUES(:itemid, :title, :category, :genre, :device, to_date(:rdate, 'yyyy-mm-dd'), :price, :rent_price, :likes)";
+    $query = "INSERT INTO Item VALUES(:itemid, :title, :category, :genre, :device, to_date(:rdate, 'yyyy-mm-dd'), :price, :rent_price, 0)";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":itemid", $params['itemid']);
     oci_bind_by_name($stmt, ":title", $params['title']);
@@ -50,13 +56,18 @@
     oci_bind_by_name($stmt, ":rdate" , $params['rdate']);
     oci_bind_by_name($stmt, ":price", $params['price']);
     oci_bind_by_name($stmt, ":rent_price", $params['rent']);
-    oci_bind_by_name($stmt, ":likes", $params['likes']);
     oci_execute($stmt);
     oci_free_statement($stmt);
     closeConnection($dbh);
   }
 
- session_start();
+  session_start();
+
+  if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
+	!isset($_SESSION['admin']) || $_SESSION['admin']!='Y'){
+    http_response_code(403);
+    exit(0);
+  }
 
   date_default_timezone_set('Asia/Singapore');
 
