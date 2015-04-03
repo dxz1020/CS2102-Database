@@ -1,0 +1,10 @@
+/* The main stylesheet for this site.*/
+
+#output {
+  border-width: 1px;
+  border-style: solid;
+  width: 80%;
+  min-width: 400px;
+  height: 300px;
+  margin: 30 auto;
+}
