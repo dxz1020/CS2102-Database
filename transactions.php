@@ -66,9 +66,33 @@
   }
 
   function processRent(){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400);
+      return;
+    }
+
+    $params = json_decode(file_get_contents('php://input'), true);
+    if(!isset($params['itemid'])){
+      http_response_code(400);
+      return;
+    }
+
+    //Preparing other required data.
+    $rent_date = date("Y-m-d");
+    $expiry_date = date("Y-m-d", strtotime("+2 weeks", strtotime($rent_date)));
+    $query = "INSERT INTO Rent VALUES(:customer, :itemid, to_date(:rentdate, 'yyyy-mm-dd'), to_date(:expdate, 'yyyy-mm-dd'), NULL)";
+
+    //The actual insertion.
     $dbh = connectToDatabase();
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":customer", $_SESSION['email']);
+    oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_bind_by_name($stmt, ":rentdate", $rent_date);
+    oci_bind_by_name($stmt, ":expdate", $expiry_date);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
     closeConnection($dbh);
-    echo 'Rented';
   }
 
   function getTransactionHistory(){
