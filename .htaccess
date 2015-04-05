@@ -1,3 +1,5 @@
+AddType application/x-httpd-php .html .htm
+
 RewriteEngine On
 
 # Change to your own matric number if you are testing on your ZONE server
