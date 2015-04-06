@@ -96,9 +96,39 @@
   }
 
   function getTransactionHistory(){
+    if($_SERVER['REQUEST_METHOD']!='GET'){
+      http_response_code(400);
+      return;
+    }
+
+    $query1 = "SELECT item, purchase_date FROM Purchase where customer=:email";
+    $query2 = "SELECT item, borrow_date, due_date FROM Rent where customer=:email";
     $dbh = connectToDatabase();
+    $res = array();
+    $purchase_array = array();
+    $rent_array = array();
+
+    //Gets list of purchases.
+    $stmt = oci_parse($dbh, $query1);
+    oci_bind_by_name($stmt, ":email", $_SESSION['email']);
+    oci_execute($stmt);
+    while($row = oci_fetch_assoc($stmt)){
+       array_push($purchase_array, $row);
+    }
+    oci_free_statement($stmt);
+
+    //Gets list of rent.
+    $stmt = oci_parse($dbh, $query2);
+    oci_bind_by_name($stmt, ":email", $_SESSION['email']);
+    oci_execute($stmt);
+    while($row = oci_fetch_assoc($stmt)){
+      array_push($rent_array, $row);
+    }
+    oci_free_statement($stmt);
     closeConnection($dbh);
-    echo 'Transaction history retrieved';
+    array_push($res, $purchase_array);
+    array_push($res, $rent_array);
+    echo json_encode($res);
   }
 
   function processLike(){
