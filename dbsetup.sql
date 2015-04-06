@@ -64,6 +64,14 @@ DELETE FROM Rent where item-:OLD.item_id;
 END;
 /
 
+CREATE TRIGGER delete_user BEFORE DELETE ON Accounts
+FOR EACH ROW
+BEGIN
+DELETE FROM Purchase WHERE customer=:OLD.email;
+DELETE FROM Rent WHERE customer=:OLD.email;
+END;
+/
+
 -- Inserting some dummy values to test the triggers.
 /*INSERT INTO Accounts VALUES('a@email.com', 'A', 'pwd', 'Y');
 INSERT INTO Accounts VALUES('b@email.com', 'B', 'password', 'N');
