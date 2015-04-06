@@ -96,48 +96,48 @@
 				<h4 class="modal-title">Add a new Item</h4>
 			</div>
 			<div class="modal-body">
-				<form class="form-inline">
+				<form class="form-inline" id="addNewItemForm">
 					<div class="form-group">
 						<label for="title">Title</label>
-						<input type="text" class="form-control" id="title">
+						<input type="text" class="form-control" name="title">
 					</div>
 					<div class="form-group">
 						<label for="category">Category</label>
-						<input type="text" class="form-control" id="category">
+						<input type="text" class="form-control" name="category">
 					</div>
 					
 					<div class="form-group">
 						<label for="genre">Genre</label>
-						<input type="text" class="form-control" id="genre">
+						<input type="text" class="form-control" name="genre">
 					</div>
 					<br /><br />
 					
 					<div class="form-group">
 						<label for="device">Device</label>
-						<input type="text" class="form-control" id="device">
+						<input type="text" class="form-control" name="device">
 					</div>
 
 					<div class="form-group">
 						<label for="releaseDate">Release Date</label>
-						<input type="text" class="form-control" id="releaseDate">
+						<input type="text" class="form-control" name="release_date">
 					</div>
 					<div class="form-group">
 						<label for="price">Price</label>
-						<input type="text" class="form-control" id="price">
+						<input type="text" class="form-control" name="price">
 					</div>
 					<br /><br />
 					<div class="form-group">
 						<label for="rentPrice">Rent Price</label>
-						<input type="text" class="form-control" id="rentPrice">
+						<input type="text" class="form-control" name="rent">
 					</div>
 					<!-- ID AND LIKES TO BE ASSIGNED -->
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="addNewItemBtn">Save changes</button>
-				</div>
-			</form>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-</html>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary" id="addNewItemBtn">Submit</button>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	</html>

@@ -1,4 +1,5 @@
 var myApp = angular.module('store',['ionic'])
+var globalHistory;
 
 myApp.controller('storeCtrl', function($scope, $ionicModal, $ionicPopup){
 	$ionicModal.fromTemplateUrl('login.html', function(modal){
@@ -20,7 +21,14 @@ myApp.controller('storeCtrl', function($scope, $ionicModal, $ionicPopup){
 			url: "logout.php"
 		})
 		.done(function( msg ) {
-			alert( "You have successfully logged out");					 
+			$('#personalHistory').html("");
+			var alertPopup = $ionicPopup.alert({
+				title: 'Logout',
+				template: "You have successfully logout"
+			});
+
+			alertPopup.then(function(res) {
+			});					 
 		})
 		.fail(function(msg) {
 			console.log("error"); 
@@ -34,6 +42,10 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 
 	$scope.toggleLeft = function() {
 		$ionicSideMenuDelegate.toggleLeft();
+	};
+
+	$scope.getHome = function() {
+		refreshHomePage();
 	};
 
 	$scope.getLifestyle = function() {
@@ -116,10 +128,16 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			alert("Thank you for liking the item");
+			var alertPopup = $ionicPopup.alert({
+				title: 'Issue',
+				template: "Thank you for liking the item"
+			});
+			alertPopup.then(function(res) {
+				console.log("Thank you for liking the item");
+			});
 			var beforeLike = parseInt($('#' +item).html());
 			$('#' +item).html(beforeLike+1);
-			//document.location.href='';   
+		  
 		})
 		.fail(function(msg) {
 			
@@ -128,7 +146,7 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 				template: "You have either liked this item or you aren't signed in"
 			});
 			alertPopup.then(function(res) {
-				console.log("You have either liked this item or you aren't signed in");
+				console.log("like failed");
 			});
 		});
 	};
@@ -147,11 +165,11 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 		})
 		.done(function(msg) {
 			var alertPopup = $ionicPopup.alert({
-				title: 'Issue',
+				title: 'Purchased',
 				template: "You have successfully purchased the item"
 			});
 			alertPopup.then(function(res) {
-				console.log("You have successfully purchased the item");
+				console.log("purhcase " + item);
 			});
 			//document.location.href='';   
 		})
@@ -166,21 +184,27 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 		});
 	};
 
-	/*
+	
 	$scope.rent = function(item) {
 
 		id = {
 			'itemid' : item
 		};
-		var itemIdJSON = JSON.stringify(id);
-		
+		var itemIdJSON = JSON.stringify(id);		
 		$.ajax({
 			method: "POST",
 			url: "transactions.php?type=rent",
-			data: itemIdJSON
+			data: itemIdJSON,
+			contentType:"application/json"
 		})
 		.done(function(msg) {
-			alert("You have rented " + item);		       
+			var alertPopup = $ionicPopup.alert({
+				title: 'Rented',
+				template: "You have successfully rented the item"
+			});
+			alertPopup.then(function(res) {
+				console.log("rented " + item);
+			});		       
 		})
 		.fail(function(msg) {
 			var alertPopup = $ionicPopup.alert({
@@ -188,10 +212,10 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 				template: "You have either rented this item or you aren't signed in"
 			});
 			alertPopup.then(function(res) {
-				console.log("You have either rented this item or you aren't signed in");
+				console.log("rent fail");
 			});
 		});
-};*/
+	};
 }
 
 myApp.directive('dir', function($compile, $parse) {
@@ -243,7 +267,7 @@ function renderSection(arr, type){
 	return string; 
 }
 
-myApp.controller('LoginController', ['$scope', function($scope) {
+myApp.controller('LoginController', ['$scope', function($scope, $ionicPopup) {
 	
 	$scope.login = function(){
 		$scope.taskModal.show();
@@ -274,7 +298,14 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 		.done(function( msg ) {
 			if(msg==1){
 				//Ask zixian to pass me name
-				alert("Login Successful");
+				//alert("You have successfully log in");
+				/*var alertPopup = $ionicPopup.alert({
+					title: 'Login',
+					template: "You have successfully log in"
+				});
+					alertPopup.then(function(res) {
+				});*/
+
 				$('.logout-btn').css({
 					"background-color": "#ef4e3a",
 					"border-color": "#cc2311"
@@ -282,9 +313,9 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 				
 				var bigscope = angular.element($("#dynamictitle")).scope();
 				bigscope.$apply(function(){
-					bigscope.name = "Welcome, user ABC";
-					//$('.title').html("Greetings, Peasants");
-				})
+					bigscope.name = "Welcome!!";
+					
+				})				
 			}
 			else {
 				alert("Verification failed");
@@ -294,9 +325,79 @@ myApp.controller('LoginController', ['$scope', function($scope) {
 		.fail(function(msg) {
 			console.log("error"); 
 		});
+
+		refreshHomePage();
 	};
 
 }]);
+
+//retrieve transaction history
+function refreshHomePage(){
+		
+		$.ajax({
+			method: "GET",
+			url: "transactions.php?type=history"
+		})
+		.done(function(msg) {
+			var history = JSON.parse(msg);
+			console.log(history);
+
+			if (history[0].length == 0 && history[1].length==0) {
+				$('#personalHistory').innerHTML = str;
+
+			} else {
+				var str = '<h3 id="transactionTitle">Your transaction records are listed as below</h3>'
+				str += renderHistory(history);
+				//console.log(str);
+				$('#personalHistory').html(str);			
+			}
+
+		})
+		.fail(function(msg) {
+			console.log("failed"); 
+		});
+}
+
+
+function renderHistory(data){
+	var str = "";
+	if(data[0].length==0) { //no purchases
+		str += "You have not bought anything<br /><br />";
+	} else {
+		var purchaseStr = "<br><br><br><table><tr><th>Item</th><th>     </th><th>Purchase Date</th></tr>";
+		
+		for(var i=0;i<data[0].length;i++) { 
+			purchaseStr += "<tr>";
+		 	purchaseStr += "<td>" + data[0][i].ITEM + "</td>";
+		 	purchaseStr += "<td>     </td>";
+		 	purchaseStr += "<td>" + data[0][i].PURCHASE_DATE + "</td>";
+		 	purchaseStr += "</tr>";
+		}
+
+		str += (purchaseStr + "</table>");
+	}
+
+	if (data[1].length==0) { //no rents
+		str += "You have not rented anything<br /><br />"
+	} else {
+		var rentStr = "<br><br><br><table><tr><th>Item</th><th>     </th><th>Borrow Date</th><th>     </th><th>Due Date</th></tr>";
+		
+		for(var i=0;i<data[1].length;i++) { 
+			rentStr += "<tr>";
+		 	rentStr += "<td>" + data[1][i].ITEM + "</td>";
+		 	rentStr += "<td>     </td>";
+		 	rentStr += "<td>" + data[1][i].BORROW_DATE + "</td>";
+		 	rentStr += "<td>     </td>";
+		 	rentStr += "<td>" + data[1][i].DUE_DATE + "</td>";
+		 	rentStr += "</tr>";
+		}
+
+		str += (rentStr + "</table>");
+	
+	}
+
+		return str;
+}
 
 myApp.controller('SearchController', ['$scope', function($scope) {
 

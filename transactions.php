@@ -74,7 +74,7 @@
 
     $params = json_decode(file_get_contents('php://input'), true);
     if(!isset($params['itemid'])){
-      http_response_code(400);
+      http_response_code(500);
       return;
     }
 
