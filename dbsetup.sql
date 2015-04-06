@@ -56,6 +56,14 @@ UPDATE Item SET likes = likes-1 WHERE item_id=:OLD.item;
 END;
 /
 
+CREATE TRIGGER delete_item BEFORE DELETE ON Item
+FOR EACH ROW
+BEGIN
+DELETE FROM Purchase WHERE item=:OLD.item_id;
+DELETE FROM Rent where item-:OLD.item_id;
+END;
+/
+
 -- Inserting some dummy values to test the triggers.
 /*INSERT INTO Accounts VALUES('a@email.com', 'A', 'pwd', 'Y');
 INSERT INTO Accounts VALUES('b@email.com', 'B', 'password', 'N');
