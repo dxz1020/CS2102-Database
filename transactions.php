@@ -27,7 +27,8 @@
   }
 
   function processPurchase(){
-    if($_SERVER['REQUEST_METHOD']!='POST'){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -96,7 +97,8 @@
   }
 
   function getTransactionHistory(){
-    if($_SERVER['REQUEST_METHOD']!='GET'){
+    if($_SERVER['REQUEST_METHOD']!='GET' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -132,7 +134,8 @@
   }
 
   function processLike(){
-    if($_SERVER['REQUEST_METHOD']!='POST'){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -168,7 +171,8 @@
   }
 
   function processUnlike(){
-    if($_SERVER['REQUEST_METHOD']!='POST'){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
