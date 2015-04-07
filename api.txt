@@ -55,13 +55,13 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
 
 9. Add content
    Method: POST
-   URL: /admin/add
+   URL: /admin/additem
    Parameters: itemid -> The id of the item to add
    	       title -> The title of the item to add
    	       category -> The category of the item to add
    	       genre -> The genre of the item to add
    	       device -> The platform of the item to add
-   	       release_date -> The date of the item to add
+   	       rdate -> The date of the item to add
    	       price -> The price of the item to add
    	       rent -> The rent of the item to add
 10. Delete item
