@@ -67,7 +67,7 @@
       http_response_code(400);
       return;
     }
-
+ 
     $params = json_decode(file_get_contents('php://input'), true);
     if(!isset($params['itemid'])){
       http_response_code(400);
@@ -77,23 +77,8 @@
     $dbh = connectToDatabase();
 
     // Actual deletion
-    /*$query1 = "DELETE FROM Purchase WHERE item = (:itemid)";
-    $stmt1 = oci_parse($dbh, $query1);
-    oci_bind_by_name($stmt1, ":itemid", $params['itemid']);
-    oci_free_statement($stmt1);
-
-    $query2 = "DELETE FROM Likes WHERE item = (:itemid)";
-    $stmt2 = oci_parse($dbh, $query2);
-    oci_bind_by_name($stmt2, ":itemid", $params['itemid']);
-    oci_free_statement($stmt2);
-
-     $query3 = "DELETE FROM Rent WHERE item = (:itemid)";
-    $stmt = oci_parse($dbh, $query3);
-    oci_bind_by_name($stmt3, ":itemid", $params['itemid']);
-    oci_free_statement($stmt3);*/
-
-    $query4 = "DELETE FROM Item WHERE item_id = (:itemid)";
-    $stmt = oci_parse($dbh, $query4);
+    $query = "DELETE FROM Item WHERE item_id = (:itemid)";
+    $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":itemid", $params['itemid']);
     oci_execute($stmt);
     oci_free_statement($stmt);
@@ -101,6 +86,30 @@
     closeConnection($dbh);
 
   }
+
+  function deleteAccount(){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+  $_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400);
+      return;
+    }
+
+    $params = json_decode(file_get_contents('php://input'), true);
+    if(!isset($params['email'])){
+      http_response_code(400);
+      return;
+    }
+
+        // Actual deletion
+    $query = "DELETE FROM Accounts WHERE email = (:email)";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $params['email']);
+    oci_free_statement($stmt);
+
+    closeConnection($dbh);
+
+  } 
+
 
   session_start();
 
@@ -115,6 +124,7 @@
   switch($_GET['type']){
     case 'additem': addItem(); break;
     case 'deleteitem': deleteItem(); break;
+    case 'deleteaccount': deleteAccount();break;
     default: http_response_code(400); break;
   }
 ?>
