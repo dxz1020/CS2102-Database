@@ -125,6 +125,7 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 		$.ajax({
 			method: "POST",
 			url: "transactions.php?type=like",
+			contentType:"application/json",
 			data: itemIdJSON
 		})
 		.done(function(msg) {
@@ -161,6 +162,7 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 		$.ajax({
 			method: "POST",
 			url: "transactions.php?type=buy",
+			contentType:"application/json",
 			data: itemIdJSON
 		})
 		.done(function(msg) {
@@ -336,14 +338,15 @@ function refreshHomePage(){
 		
 		$.ajax({
 			method: "GET",
-			url: "transactions.php?type=history"
+			url: "transactions.php?type=history",
+			contentType:"application/json"
 		})
 		.done(function(msg) {
 			var history = JSON.parse(msg);
 			console.log(history);
 
 			if (history[0].length == 0 && history[1].length==0) {
-				$('#personalHistory').innerHTML = str;
+				$('#personalHistory').html("You have not purchased anything");
 
 			} else {
 				var str = '<h3 id="transactionTitle">Your transaction records are listed as below</h3>'
