@@ -4,8 +4,8 @@
    */
 
   putenv("ORACLE_HOME=/oraclient");
-  $dbuser = "a0111217";		//Change to your own account
-  $dbpassword = "crse1420";	//Change to appropriate password
+  $dbuser = "a0110781";		//Change to your own account
+  $dbpassword = "Nana7Nana";	//Change to appropriate password
   $dbinfo = "(DESCRIPTION = (ADDRESS_LIST = (
       ADDRESS = (PROTOCOL = TCP)(HOST = sid3.comp.nus.edu.sg)(PORT = 1521))
     )(CONNECT_DATA = (SERVICE_NAME = sid3.comp.nus.edu.sg)))";
@@ -63,7 +63,7 @@
 
   function deleteItem(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-  $_SERVER['CONTENT_TYPE']!='application/json'){
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -77,7 +77,7 @@
     $dbh = connectToDatabase();
 
     // Actual deletion
-    $query1 = "DELETE FROM Purchase WHERE item = (:itemid)";
+    /*$query1 = "DELETE FROM Purchase WHERE item = (:itemid)";
     $stmt1 = oci_parse($dbh, $query1);
     oci_bind_by_name($stmt1, ":itemid", $params['itemid']);
     oci_free_statement($stmt1);
@@ -90,13 +90,13 @@
      $query3 = "DELETE FROM Rent WHERE item = (:itemid)";
     $stmt = oci_parse($dbh, $query3);
     oci_bind_by_name($stmt3, ":itemid", $params['itemid']);
-    oci_free_statement($stmt3);
+    oci_free_statement($stmt3);*/
 
     $query4 = "DELETE FROM Item WHERE item_id = (:itemid)";
     $stmt = oci_parse($dbh, $query4);
-    oci_bind_by_name($stmt4, ":itemid", $params['itemid']);
-    oci_execute($stmt4);
-    oci_free_statement($stmt4);
+    oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
 
     closeConnection($dbh);
 
@@ -113,8 +113,8 @@
   date_default_timezone_set('Asia/Singapore');
 
   switch($_GET['type']){
-    case 'add': addItem(); break;
-    case 'deleteItem': deleteItem(); break;
+    case 'additem': addItem(); break;
+    case 'deleteitem': deleteItem(); break;
     default: http_response_code(400); break;
   }
 ?>
