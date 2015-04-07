@@ -60,7 +60,7 @@ CREATE TRIGGER delete_item BEFORE DELETE ON Item
 FOR EACH ROW
 BEGIN
 DELETE FROM Purchase WHERE item=:OLD.item_id;
-DELETE FROM Rent where item-:OLD.item_id;
+DELETE FROM Rent where item=:OLD.item_id;
 END;
 /
 
