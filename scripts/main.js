@@ -1,12 +1,50 @@
 /* main.js
- * The main Javascript file for the website.
+ * The main Javascript file for admin website.
  */
 
  $(function() {
   getItems();
   getAccounts();
-  getPurchaseHistory();
+  //getPurchaseHistory();
   getRentHistory();
+
+
+  $('#addNewItemForm').submit(function(e){
+    var values = $('#addNewItemForm').serializeArray();
+    console.log("inside item");
+    console.log(values);
+    e.preventDefault();
+  });
+
+  $('#addNewAccountForm').submit(function(e){
+    var values = $(this).serializeArray();
+    console.log("inside account");
+    console.log(values);
+    e.preventDefault();
+  });
+
+    $('#addNewPurchaseForm').submit(function(e){
+    var values = $(this).serializeArray();
+    console.log("inside Purchase");
+    console.log(values);
+    e.preventDefault();
+  });
+
+    $('#addNewRentForm').submit(function(e){
+    var values = $(this).serializeArray();
+    console.log("inside rent");
+    console.log(values);
+    e.preventDefault();
+  });
+
+    $('#searchForm').submit(function(e){
+      var values = $(this).serializeArray();
+      console.log("searching...");
+      console.log(values);
+      e.preventDefault();
+  });
+
+
 });
 
 
@@ -93,7 +131,7 @@ function getPurchaseHistory() {
 
   $.ajax({
     method: "GET",
-    url: "../search.php"
+    url: "../transactions/history"
   })
   .done(function(data) {
     console.log( "Displayed Purchase History"); 
@@ -113,9 +151,9 @@ function renderPurchaseHistoryTable(arr){
     '<tr>' +
     '<th scope="row">' + arr[i].ITEM_ID + '</th>' + //customer
     "<td>" + arr[i].TITLE + "</td>" + //item
-    "<td>" + arr[i].CATEGORY + "</td>" + //date
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ID + ')">Modify</button></td>' + //email
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ID + ')">Drop</button></td>' + //email
+    "<td>" + arr[i].PURCHASE_DATE + "</td>" + //date
+    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Modify</button></td>' + //email
+    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Drop</button></td>' + //email
     "</tr>"
   }
 

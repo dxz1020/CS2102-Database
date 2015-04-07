@@ -90,30 +90,29 @@
 				<h4 class="modal-title">Add a new Item</h4>
 			</div>
 			<div class="modal-body">
-				<form class="form-inline">
+				<form class="form-inline" id="addNewAccountForm">
 					<div class="form-group">
 						<label for="username">Username</label>
-						<input type="text" class="form-control" id="username">
+						<input type="text" class="form-control" name ="username">
 					</div>
 					<div class="form-group">
 						<label for="email">Email</label>
-						<input type="text" class="form-control" id="email">
+						<input type="text" class="form-control" name="email">
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label>
-						<input type="password" class="form-control" id="password">
+						<input type="password" class="form-control" name="password">
 					</div>
 					<br /><br />
 					<div class="form-group">
 						<label for="accountType">Account Type</label>
-						<input type="text" class="form-control" id="accountType">
+						<input type="text" class="form-control" name="accountType">
 					</div>
 				
 					<!-- ID AND LIKES TO BE ASSIGNED -->
-				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="addNewUserBtn">Save changes</button>
+					<button type="submit" class="btn btn-primary" id="">Submit</button>
 				</div>
 			</form>
 		</div><!-- /.modal-content -->

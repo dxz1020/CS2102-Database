@@ -14,3 +14,20 @@
 .red-btn {
 	background-color: red;
 }
+
+#transactionTitle {
+	font-weight: bold;
+	text-align: center;
+  	margin-top: 50px;
+}
+
+table {
+	margin: auto;
+}
+
+th{
+	font-weight: bold;
+}
+td {
+	padding: 0px 20px;
+}
