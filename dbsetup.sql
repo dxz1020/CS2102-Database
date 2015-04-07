@@ -67,6 +67,7 @@ END;
 CREATE TRIGGER delete_user BEFORE DELETE ON Accounts
 FOR EACH ROW
 BEGIN
+DELETE FROM Likes WHERE customer=:OLD.email;
 DELETE FROM Purchase WHERE customer=:OLD.email;
 DELETE FROM Rent WHERE customer=:OLD.email;
 END;
