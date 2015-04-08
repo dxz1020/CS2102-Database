@@ -87,6 +87,30 @@
 
   }
 
+  function addAccount(){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400);
+      return;
+    }
+
+    $params = json_decode(file_get_contents("php://input"), true);
+    if(!isset($params['email']) || !isset($params['username']) ||
+	!isset($params['password']) || !isset($params['admin'])){
+      http_response_code(400);
+    }
+
+    $dbh = connectToDatabase();
+    $query = "INSERT INTO Accounts VALUES(:email, :username, :password, :admin)";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $params['email']);
+    oci_bind_by_name($stmt, ":username", $params['username']);
+    oci_bind_by_name($stmt, ":password", $params['password']);
+    oci_bind_by_name($stmt, ":admin", $params['admin']);
+    oci_execute($stmt);
+    closeConnection($dbh);
+  }
+
   function deleteAccount(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
 	$_SERVER['CONTENT_TYPE']!='application/json'){
@@ -125,6 +149,7 @@
   switch($_GET['type']){
     case 'additem': addItem(); break;
     case 'deleteitem': deleteItem(); break;
+    case 'addaccount': addAccount(); break;
     case 'deleteaccount': deleteAccount();break;
     default: http_response_code(400); break;
   }
