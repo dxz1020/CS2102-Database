@@ -6,8 +6,7 @@ genre VARCHAR(64) NOT NULL,
 device VARCHAR(64) NOT NULL,
 release_date DATE NOT NULL,
 price NUMBER(*, 2) NOT NULL CHECK(price>=0),
-rent_price NUMBER(*, 2) NOT NULL CHECK(rent_price>=0),
-likes INT DEFAULT 0 NOT NULL
+rent_price NUMBER(*, 2) NOT NULL CHECK(rent_price>=0)
 );
 
 CREATE TABLE Accounts (
@@ -18,15 +17,15 @@ admin CHAR(1) NOT NULL CHECK(admin='Y' OR admin='N')
 );
 
 CREATE TABLE Purchase (
-customer VARCHAR(64) REFERENCES Accounts(email),
-item VARCHAR(32) REFERENCES Item(item_id),
+customer VARCHAR(64) REFERENCES Accounts(email) ON DELETE CASCADE,
+item VARCHAR(32) REFERENCES Item(item_id) ON DELETE CASCADE,
 purchase_date DATE NOT NULL,
 PRIMARY KEY (customer, item)
 );
 
 CREATE TABLE Rent (
-customer VARCHAR(64) REFERENCES Accounts(email),
-item VARCHAR(32) REFERENCES Item(item_id),
+customer VARCHAR(64) REFERENCES Accounts(email) ON DELETE CASCADE,
+item VARCHAR(32) REFERENCES Item(item_id) ON DELETE CASCADE,
 borrow_date DATE NOT NULL,
 due_date DATE NOT NULL,
 return_date DATE,
@@ -36,13 +35,13 @@ CHECK(return_date IS NULL OR borrow_date<=return_date)
 );
 
 CREATE TABLE Likes (
-customer VARCHAR(64) REFERENCES Accounts(email),
-item VARCHAR(32) REFERENCES Item(item_id),
+customer VARCHAR(64) REFERENCES Accounts(email) ON DELETE CASCADE,
+item VARCHAR(32) REFERENCES Item(item_id) ON DELETE CASCADE,
 PRIMARY KEY (customer, item)
 );
 
 -- Trigger to update item's overall rating after inserting a new rating
-CREATE TRIGGER on_add_like AFTER INSERT ON Likes
+/*CREATE TRIGGER on_add_like AFTER INSERT ON Likes
 FOR EACH ROW
 BEGIN
 UPDATE Item SET likes = likes+1 WHERE item_id=:NEW.item;
@@ -55,8 +54,8 @@ BEGIN
 UPDATE Item SET likes = likes-1 WHERE item_id=:OLD.item;
 END;
 /
-
-CREATE TRIGGER delete_item BEFORE DELETE ON Item
+*/
+/*CREATE TRIGGER delete_item BEFORE DELETE ON Item
 FOR EACH ROW
 BEGIN
 DELETE FROM Purchase WHERE item=:OLD.item_id;
@@ -72,7 +71,7 @@ DELETE FROM Purchase WHERE customer=:OLD.email;
 DELETE FROM Rent WHERE customer=:OLD.email;
 END;
 /
-
+*/
 -- Inserting some dummy values to test the triggers.
 /*INSERT INTO Accounts VALUES('a@email.com', 'A', 'pwd', 'Y');
 INSERT INTO Accounts VALUES('b@email.com', 'B', 'password', 'N');

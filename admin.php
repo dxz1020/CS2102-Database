@@ -46,7 +46,7 @@
     $dbh = connectToDatabase();
 
     //Actual Insertion
-    $query = "INSERT INTO Item VALUES(:itemid, :title, :category, :genre, :device, to_date(:rdate, 'yyyy-mm-dd'), :price, :rent_price, 0)";
+    $query = "INSERT INTO Item VALUES(:itemid, :title, :category, :genre, :device, to_date(:rdate, 'yyyy-mm-dd'), :price, :rent_price)";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":itemid", $params['itemid']);
     oci_bind_by_name($stmt, ":title", $params['title']);
@@ -63,7 +63,7 @@
 
   function deleteItem(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-  $_SERVER['CONTENT_TYPE']!='application/json'){
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -77,18 +77,57 @@
     $dbh = connectToDatabase();
 
     // Actual deletion
-    $query = "DELETE FROM Item WHERE item_id = (:itemid)";
+    $query = "DELETE FROM Item WHERE item_id=:itemid";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_execute($stmt);
     oci_free_statement($stmt);
 
     closeConnection($dbh);
 
   }
 
+  function addAccount(){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400);
+      return;
+    }
+
+    $params = json_decode(file_get_contents("php://input"), true);
+    if(!isset($params['email']) || !isset($params['username']) ||
+	!isset($params['password']) || !isset($params['admin'])){
+      http_response_code(400);
+    }
+
+    $dbh = connectToDatabase();
+    $query = "SELECT * FROM Accounts WHERE email=:email";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $params['email']);
+    oci_execute($stmt);
+    if($row = oci_fetch_row($stmt)){
+      oci_free_statement($stmt);
+      closeConnection($dbh);
+      //echo "This email address is in use by another user.";
+      echo "0";
+      return;
+    }
+    oci_free_statement($stmt);
+
+    $query = "INSERT INTO Accounts VALUES(:email, :username, :password, :admin)";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $params['email']);
+    oci_bind_by_name($stmt, ":username", $params['username']);
+    oci_bind_by_name($stmt, ":password", $params['password']);
+    oci_bind_by_name($stmt, ":admin", $params['admin']);
+    oci_execute($stmt);
+    closeConnection($dbh);
+    echo "1";
+  }
+
   function deleteAccount(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-  $_SERVER['CONTENT_TYPE']!='application/json'){
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -99,16 +138,50 @@
       return;
     }
 
-        // Actual deletion
-    $query = "DELETE FROM Accounts WHERE email = (:email)";
+    $dbh = connectToDatabase();
+
+    // Actual deletion
+    $query = "DELETE FROM Accounts WHERE email=:email";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":email", $params['email']);
+    oci_execute($stmt);
     oci_free_statement($stmt);
 
     closeConnection($dbh);
-
   } 
 
+  function listTransactions(){
+    if($_SERVER['REQUEST_METHOD']!='GET'){
+      http_response_code(400);
+      return;
+    }
+
+    $res = array();
+    $purchase_array = array();
+    $rent_array = array();
+
+    $dbh = connectToDatabase();
+
+    //Get list of purchases
+    $query = "SELECT * FROM Purchase GROUP BY customer, item, purchase_date";
+    $stmt = oci_parse($dbh, $query);
+    oci_execute($stmt);
+    while($row = oci_fetch_assoc($stmt)) array_push($purchase_array, $row);
+    oci_free_statement($stmt);
+
+    //Get list of rent transactions
+    $query = "SELECT * FROM Rent GROUP BY customer, item, borrow_date, due_date, return_date";
+    $stmt = oci_parse($dbh, $query);
+    oci_execute($stmt);
+    while($row = oci_fetch_assoc($stmt)) array_push($rent_array, $row);
+    oci_free_statement($stmt);
+    closeConnection($dbh);
+
+    //Assemble the response message and send
+    array_push($res, $purchase_array);
+    array_push($res, $rent_array);
+    echo json_encode($res);
+  }
 
   session_start();
 
@@ -121,9 +194,11 @@
   date_default_timezone_set('Asia/Singapore');
 
   switch($_GET['type']){
-    case 'add': addItem(); break;
-    case 'deleteAccount': deleteAccount();break;
-    case 'deleteItem': deleteItem(); break;
+    case 'additem': addItem(); break;
+    case 'deleteitem': deleteItem(); break;
+    case 'addaccount': addAccount(); break;
+    case 'deleteaccount': deleteAccount();break;
+    case 'transactions': listTransactions();
     default: http_response_code(400); break;
   }
 ?>

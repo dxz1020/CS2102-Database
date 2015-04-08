@@ -28,7 +28,7 @@
     array_push($param_array, "device='".$_GET['device']."'");
   $param_count = count($param_array);
 
-  $query = "SELECT * FROM Item"; //Basic query statement
+  $query = "SELECT I.item_id, I.title, I.category, I.genre, I.device, I.release_date, I.price, I.rent_price, CASE WHEN L.likes IS NULL THEN 0 ELSE L.likes END AS likes FROM Item I LEFT JOIN (SELECT item, COUNT(*) AS likes FROM Likes GROUP BY item) L ON L.item=I.item_id";
 
   if($param_count>0){ //Complete the query with search filters
     $query.=" WHERE ".$param_array[0];
