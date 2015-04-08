@@ -108,7 +108,8 @@
     if($row = oci_fetch_row($stmt)){
       oci_free_statement($stmt);
       closeConnection($dbh);
-      echo "This email address is in use by another user.";
+      //echo "This email address is in use by another user.";
+      echo "0";
       return;
     }
     oci_free_statement($stmt);
@@ -121,6 +122,7 @@
     oci_bind_by_name($stmt, ":admin", $params['admin']);
     oci_execute($stmt);
     closeConnection($dbh);
+    echo "1";
   }
 
   function deleteAccount(){
