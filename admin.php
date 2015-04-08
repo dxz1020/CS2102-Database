@@ -183,6 +183,30 @@
     echo json_encode($res);
   }
 
+  function listAccounts(){
+    if($_SERVER['REQUEST_METHOD']!='GET'){
+      http_response_code(400);
+      return;
+    }
+
+    $res = array();
+    $acc_array = array();
+
+    $dbh = connectToDatabase();
+
+    //Get list of accounts
+    $query = "SELECT * FROM Accounts";
+    $stmt = oci_parse($dbh, $query);
+    oci_execute($stmt);
+    while($row = oci_fetch_assoc($stmt)) array_push($acc_array, $row);
+    oci_free_statement($stmt);
+
+    closeConnection($dbh);
+
+    //Assemble the response message and send
+    echo json_encode($acc_array);
+  }
+
   session_start();
 
   if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
@@ -198,6 +222,7 @@
     case 'deleteitem': deleteItem(); break;
     case 'addaccount': addAccount(); break;
     case 'deleteaccount': deleteAccount();break;
+    case 'accounts' : listAccounts(); break;
     case 'transactions': listTransactions();
     default: http_response_code(400); break;
   }

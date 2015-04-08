@@ -98,7 +98,10 @@ function getAccounts() {
 
   $.ajax({
     method: "GET",
-    url: "../admin.php"
+    url: "../admin.php",
+    data: {
+      type : "accounts"
+    }
   })
   .done(function(data) {
     console.log( "Displayed Accounts"); 
@@ -116,11 +119,11 @@ function renderAccountTable(arr){
   for(var i=0;i<arr.length;i++){
     string +=
     '<tr>' +
-    '<th scope="row">' + arr[i].ITEM_ID + '</th>' + //username
-    "<td>" + arr[i].TITLE + "</td>" + //email
-    "<td>" + arr[i].CATEGORY + "</td>" + //accounttype
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ID + ')">Modify</button></td>' + //email
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ID + ')">Drop</button></td>' + //email
+    '<th scope="row">' + arr[i].USERNAME + '</th>' + //username
+    "<td>" + arr[i].EMAIL + "</td>" + //email
+    "<td>" + arr[i].ADMIN + "</td>" + //accounttype
+    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].EMAIL + ')">Modify</button></td>' + //email
+    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].EMAIL + ')">Drop</button></td>' + //email
     "</tr>"
   }
 
