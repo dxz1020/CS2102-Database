@@ -84,3 +84,7 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
     Method: POST
     URL: /admin/deleteaccount
     Parameters: email -> The email address used to identify the account.
+
+13. List all transactions
+    Method: GET
+    URL: /admin/transactions
