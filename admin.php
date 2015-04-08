@@ -4,8 +4,8 @@
    */
 
   putenv("ORACLE_HOME=/oraclient");
-  $dbuser = "a0110781";		//Change to your own account
-  $dbpassword = "Nana7Nana";	//Change to appropriate password
+  $dbuser = "a0110781";   //Change to your own account
+  $dbpassword = "Nana7Nana";  //Change to appropriate password
   $dbinfo = "(DESCRIPTION = (ADDRESS_LIST = (
       ADDRESS = (PROTOCOL = TCP)(HOST = sid3.comp.nus.edu.sg)(PORT = 1521))
     )(CONNECT_DATA = (SERVICE_NAME = sid3.comp.nus.edu.sg)))";
@@ -195,7 +195,7 @@
     $dbh = connectToDatabase();
 
     //Get list of accounts
-    $query = "SELECT * FROM Accounts";
+    $query = "SELECT email, username, admin FROM Accounts";
     $stmt = oci_parse($dbh, $query);
     oci_execute($stmt);
     while($row = oci_fetch_assoc($stmt)) array_push($acc_array, $row);
@@ -209,7 +209,7 @@
 
   session_start();
 
-  if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
+ if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
 	!isset($_SESSION['admin']) || $_SESSION['admin']!='Y'){
     http_response_code(403);
     exit(0);
