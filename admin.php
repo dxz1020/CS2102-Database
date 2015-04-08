@@ -26,18 +26,18 @@
 
   function addItem(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-  $_SERVER['CONTENT_TYPE']!='application/json'){
-      http_response_code(400);
-      return;
+       $_SERVER['CONTENT_TYPE']!='application/json'){
+        http_response_code(400);
+        return;
     }
 
     $params = json_decode(file_get_contents('php://input'), true);
     if(!isset($params['itemid']) || !isset($params['title']) ||
-  !isset($params['category']) || !isset($params['genre']) ||
-  !isset($params['device']) || !isset($params['rdate']) ||
-  !isset($params['price']) || !isset($params['rent'])){
-      http_response_code(400);
-      return;
+       !isset($params['category']) || !isset($params['genre']) ||
+       !isset($params['device']) || !isset($params['rdate']) ||
+       !isset($params['price']) || !isset($params['rent'])){
+          http_response_code(400);
+          return;
     }
 
     //There is a chance that some old content may be put up.
@@ -63,9 +63,9 @@
 
   function deleteItem(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-  $_SERVER['CONTENT_TYPE']!='application/json'){
-      http_response_code(400);
-      return;
+       $_SERVER['CONTENT_TYPE']!='application/json'){
+        http_response_code(400);
+        return;
     }
  
     $params = json_decode(file_get_contents('php://input'), true);
@@ -89,15 +89,15 @@
 
   function addAccount(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-  $_SERVER['CONTENT_TYPE']!='application/json'){
-      http_response_code(400);
-      return;
+       $_SERVER['CONTENT_TYPE']!='application/json'){
+        http_response_code(400);
+        return;
     }
 
     $params = json_decode(file_get_contents("php://input"), true);
     if(!isset($params['email']) || !isset($params['username']) ||
-  !isset($params['password']) || !isset($params['admin'])){
-      http_response_code(400);
+       !isset($params['password']) || !isset($params['admin'])){
+          http_response_code(400);
     }
 
     $dbh = connectToDatabase();
