@@ -11,21 +11,30 @@
 
   $('#addNewItemForm').submit(function(e){
     var values = $('#addNewItemForm').serializeArray();
-    console.log("inside item");
+    console.log("add new item form");
     console.log(values);
     e.preventDefault();
   });
 
   $('#addNewAccountForm').submit(function(e){
     var values = $(this).serializeArray();
-    console.log("inside account");
-    console.log(values);
+    console.log("add new account form");
+    //prepare array
+
+    params = {
+      email : values[1].value,
+      username : values[0].value,
+      password : values[2].value,
+      admin : values[3].value
+    };    
+    console.log(params);
+    processNewAccount(params);
     e.preventDefault();
   });
 
     $('#addNewPurchaseForm').submit(function(e){
     var values = $(this).serializeArray();
-    console.log("inside Purchase");
+    console.log("add new purchase form");
     console.log(values);
     e.preventDefault();
   });
@@ -47,6 +56,21 @@
 
 });
 
+function processNewAccount(params){
+    $.ajax({
+    method: "POST",
+    url: "../admin.php?type=addaccount",
+    contentType : "application/json",
+    data: JSON.stringify(params)
+  })
+  .done(function(data) {
+    console.log( "added new account"); 
+    console.log(data);
+  })
+  .fail(function(msg) {
+    console.log("failed "); 
+  });
+}
 
  function getItems() {
   $.ajax({
