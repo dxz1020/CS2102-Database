@@ -10,9 +10,10 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
 	       category -> The category of the item to search
 	       genre -> The genre of the item to search. category must be specified.
 	       device -> The platform for the searched item.
+	       sortby -> The field by which to sort the items by.
    * Note: Not specifying any parameters causes the entire list of items to be
 	   displayed.
-	       sortby -> The field by which to sort the items by.
+   Returns: An array of items.
 
 2. Login
    Method: POST
@@ -64,8 +65,22 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
    	       rdate -> The date of the item to add
    	       price -> The price of the item to add
    	       rent -> The rent of the item to add
+
 10. Delete item
     Method: POST
-    URL: /admin/deleteItem
+    URL: /admin/deleteitem
     Parameters: itemid -> The id of the item to delete
-   
+
+11. Add User
+    Method: POST
+    URL: /admin/addaccount
+    Parameters: email -> The email of the new user
+		username -> The username
+		password -> The password
+		admin -> Whether this user is to be an admin
+    Returns: 1 if the user is successfully added, 0 otherwise.
+
+12. Delete User
+    Method: POST
+    URL: /admin/deleteaccount
+    Parameters: email -> The email address used to identify the account.
