@@ -295,10 +295,11 @@ myApp.controller('LoginController', ['$scope', function($scope, $ionicPopup) {
 		$.ajax({
 			method: "POST",
 			url: "login.php",
-			data: infoJSON
+			data: infoJSON,
+			contentType: "application/json"
 		})
 		.done(function( msg ) {
-			if(msg==1){
+			if(msg!=0){
 				//Ask zixian to pass me name
 				//alert("You have successfully log in");
 				/*var alertPopup = $ionicPopup.alert({

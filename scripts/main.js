@@ -5,7 +5,7 @@
  $(function() {
   getItems();
   getAccounts();
-  //getPurchaseHistory();
+  getPurchaseHistory();
   getRentHistory();
 
 
@@ -98,7 +98,7 @@ function getAccounts() {
 
   $.ajax({
     method: "GET",
-    url: "../search.php"
+    url: "../admin.php"
   })
   .done(function(data) {
     console.log( "Displayed Accounts"); 
@@ -131,12 +131,16 @@ function getPurchaseHistory() {
 
   $.ajax({
     method: "GET",
-    url: "../transactions/history"
+    url: "../admin.php",
+    data: {
+      type: "transactions"
+    }
   })
   .done(function(data) {
-    console.log( "Displayed Purchase History"); 
+    console.log( "Displayed Rent History"); 
     var list = JSON.parse(data);
-    $('.listPurchaseHistory').html(renderPurchaseHistoryTable(list));
+    console.log(list);
+    $('.listPurchaseHistory').html(renderPurchaseHistoryTable(list[0])); //list[0] for purchase
   })
   .fail(function(msg) {
     console.log("failed "); 
@@ -149,8 +153,8 @@ function renderPurchaseHistoryTable(arr){
   for(var i=0;i<arr.length;i++){
     string +=
     '<tr>' +
-    '<th scope="row">' + arr[i].ITEM_ID + '</th>' + //customer
-    "<td>" + arr[i].TITLE + "</td>" + //item
+    '<th scope="row">' + arr[i].CUSTOMER + '</th>' + //customer
+    "<td>" + arr[i].ITEM + "</td>" + //item
     "<td>" + arr[i].PURCHASE_DATE + "</td>" + //date
     '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Modify</button></td>' + //email
     '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Drop</button></td>' + //email
@@ -164,12 +168,16 @@ function getRentHistory() {
 
   $.ajax({
     method: "GET",
-    url: "../search.php"
+    url: "../admin.php",
+    data: {
+      type: "transactions"
+    }
   })
   .done(function(data) {
     console.log( "Displayed Rent History"); 
     var list = JSON.parse(data);
-    $('.listRentHistory').html(renderRentHistoryTable(list));
+    console.log(list);
+    $('.listRentHistory').html(renderRentHistoryTable(list[1])); //list[1] for rent
   })
   .fail(function(msg) {
     console.log("failed "); 
@@ -182,13 +190,13 @@ function renderRentHistoryTable(arr){
   for(var i=0;i<arr.length;i++){
     string +=
     '<tr>' +
-    '<th scope="row">' + arr[i].ITEM_ID + '</th>' + //customer
-    "<td>" + arr[i].TITLE + "</td>" + //item
-    "<td>" + arr[i].CATEGORY + "</td>" + //borrowed
-    "<td>" + arr[i].GENRE + "</td>" + //due
-    "<td>" + arr[i].DEVICE + "</td>" + //returned
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ID + ')">Modify</button></td>' +
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ID + ')">Drop</button></td>' +
+    '<th scope="row">' + arr[i].CUSTOMER + '</th>' + //customer
+    "<td>" + arr[i].ITEM + "</td>" + //item
+    "<td>" + arr[i].BORROW_DATE + "</td>" + //borrowed
+    "<td>" + arr[i].DUE_DATE + "</td>" + //due
+    "<td>" + arr[i].RETURN_DATE + "</td>" + //returned
+    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ + ')">Modify</button></td>' +
+    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Drop</button></td>' +
     "</tr>"
   }
 
