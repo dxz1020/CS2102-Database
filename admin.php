@@ -77,7 +77,7 @@
     $dbh = connectToDatabase();
 
     // Actual deletion
-    $query = "DELETE FROM Item WHERE item_id = (:itemid)";
+    $query = "DELETE FROM Item WHERE item_id=:itemid";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":itemid", $params['itemid']);
     oci_execute($stmt);
@@ -89,7 +89,7 @@
 
   function deleteAccount(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-  $_SERVER['CONTENT_TYPE']!='application/json'){
+	$_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -100,16 +100,17 @@
       return;
     }
 
-        // Actual deletion
-    $query = "DELETE FROM Accounts WHERE email = (:email)";
+    $dbh = connectToDatabase();
+
+    // Actual deletion
+    $query = "DELETE FROM Accounts WHERE email=:email";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":email", $params['email']);
+    oci_execute($stmt);
     oci_free_statement($stmt);
 
     closeConnection($dbh);
-
   } 
-
 
   session_start();
 
