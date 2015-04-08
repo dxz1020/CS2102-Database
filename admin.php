@@ -150,6 +150,39 @@
     closeConnection($dbh);
   } 
 
+  function listTransactions(){
+    if($_SERVER['REQUEST_METHOD']!='GET'){
+      http_response_code(400);
+      return;
+    }
+
+    $res = array();
+    $purchase_array = array();
+    $rent_array = array();
+
+    $dbh = connectToDatabase();
+
+    //Get list of purchases
+    $query = "SELECT * FROM Purchase GROUP BY customer, item, purchase_date";
+    $stmt = oci_parse($dbh, $query);
+    oci_execute($stmt);
+    while($row = oci_fetch_assoc($stmt)) array_push($purchase_array, $row);
+    oci_free_statement($stmt);
+
+    //Get list of rent transactions
+    $query = "SELECT * FROM Rent GROUP BY customer, item, borrow_date, due_date, return_date";
+    $stmt = oci_parse($dbh, $query);
+    oci_execute($stmt);
+    while($row = oci_fetch_assoc($stmt)) array_push($rent_array, $row);
+    oci_free_statement($stmt);
+    closeConnection($dbh);
+
+    //Assemble the response message and send
+    array_push($res, $purchase_array);
+    array_push($res, $rent_array);
+    echo json_encode($res);
+  }
+
   session_start();
 
   if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
@@ -165,6 +198,7 @@
     case 'deleteitem': deleteItem(); break;
     case 'addaccount': addAccount(); break;
     case 'deleteaccount': deleteAccount();break;
+    case 'transactions': listTransactions();
     default: http_response_code(400); break;
   }
 ?>
