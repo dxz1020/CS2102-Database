@@ -2,8 +2,10 @@
   /* login.php
    * Handles login requests.
    */
+  define('BASEURL', 'http://cs2102-i.comp.nus.edu.sg/~a0110781/');
 
-  if($_SERVER['REQUEST_METHOD']!="POST"){
+  if($_SERVER['REQUEST_METHOD']!="POST" ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
     http_response_code(400);
     exit(0);
   }
@@ -29,7 +31,7 @@
   $dbh = oci_connect($dbuser, $dbpassword, $dbinfo);
   if(!$dbh){
     http_response_code(503);
-    exit(1);
+    exit(0);
   }
 
   $query = "SELECT * FROM Accounts WHERE email=:email AND password=:password";
@@ -43,11 +45,13 @@
     $_SESSION['email'] = $row['EMAIL'];
     $_SESSION['username'] = $row['USERNAME'];
     $_SESSION['admin'] = $row['ADMIN'];
-    echo 1;
+    //oci_free_statement($stmt);
+    //oci_close($dbh);
+    if($_SESSION['admin']=='Y') header('Location: '.BASEURL);
+    else header('Location: '.BASEURL.'adminPages/index.html');
   } else
     echo 0;
 
   oci_free_statement($stmt);
-
   oci_close($dbh);
 ?>
