@@ -26,16 +26,16 @@
 
   function addItem(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-	$_SERVER['CONTENT_TYPE']!='application/json'){
+  $_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
 
     $params = json_decode(file_get_contents('php://input'), true);
     if(!isset($params['itemid']) || !isset($params['title']) ||
-	!isset($params['category']) || !isset($params['genre']) ||
-	!isset($params['device']) || !isset($params['rdate']) ||
-	!isset($params['price']) || !isset($params['rent'])){
+  !isset($params['category']) || !isset($params['genre']) ||
+  !isset($params['device']) || !isset($params['rdate']) ||
+  !isset($params['price']) || !isset($params['rent'])){
       http_response_code(400);
       return;
     }
@@ -63,7 +63,7 @@
 
   function deleteItem(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-	$_SERVER['CONTENT_TYPE']!='application/json'){
+  $_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -89,14 +89,14 @@
 
   function addAccount(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-	$_SERVER['CONTENT_TYPE']!='application/json'){
+  $_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
 
     $params = json_decode(file_get_contents("php://input"), true);
     if(!isset($params['email']) || !isset($params['username']) ||
-	!isset($params['password']) || !isset($params['admin'])){
+  !isset($params['password']) || !isset($params['admin'])){
       http_response_code(400);
     }
 
@@ -127,7 +127,7 @@
 
   function deleteAccount(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
-	$_SERVER['CONTENT_TYPE']!='application/json'){
+  $_SERVER['CONTENT_TYPE']!='application/json'){
       http_response_code(400);
       return;
     }
@@ -209,8 +209,8 @@
 
   session_start();
 
- if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
-	!isset($_SESSION['admin']) || $_SESSION['admin']!='Y'){
+  if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
+  !isset($_SESSION['admin']) || $_SESSION['admin']!='Y'){
     http_response_code(403);
     exit(0);
   }

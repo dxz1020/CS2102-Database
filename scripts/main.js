@@ -21,7 +21,7 @@
     console.log("add new account form");
     //prepare array
 
-    params = {
+    var params = {
       email : values[1].value,
       username : values[0].value,
       password : values[2].value,
@@ -146,12 +146,33 @@ function renderAccountTable(arr){
     '<th scope="row">' + arr[i].USERNAME + '</th>' + //username
     "<td>" + arr[i].EMAIL + "</td>" + //email
     "<td>" + arr[i].ADMIN + "</td>" + //accounttype
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].EMAIL + ')">Modify</button></td>' + //email
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].EMAIL + ')">Drop</button></td>' + //email
+    '<td><button class= "btn btn-default btn-sm" onclick="modifyAccount('+ "'" + arr[i].EMAIL + "'" + ')">Modify</button></td>' + //email
+    '<td><button class= "btn btn-default btn-sm" onclick="deleteAccount('+ "'" + arr[i].EMAIL + "'" + ')">Drop</button></td>' + //email
     "</tr>"
   }
 
   return string;
+}
+
+function deleteAccount(userEmail) {
+  var params = {
+    email: userEmail
+  };
+
+  $.ajax({
+    method: "POST",
+    url: "../admin.php?type=deleteaccount",
+    contentType : "application/json",
+    data: JSON.stringify(params)
+  })
+  
+  .done(function(data) {
+    console.log( "Deleting account..."); 
+    console.log(data); //should show 1 if success
+  })
+  .fail(function(msg) {
+    console.log("failed in deleting account"); 
+  });
 }
 
 function getPurchaseHistory() {
@@ -164,7 +185,7 @@ function getPurchaseHistory() {
     }
   })
   .done(function(data) {
-    console.log( "Displayed Rent History"); 
+    console.log( "Displayed Purchase History"); 
     var list = JSON.parse(data);
     console.log(list);
     $('.listPurchaseHistory').html(renderPurchaseHistoryTable(list[0])); //list[0] for purchase
