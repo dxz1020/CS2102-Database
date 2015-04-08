@@ -46,7 +46,7 @@
     $dbh = connectToDatabase();
 
     //Actual Insertion
-    $query = "INSERT INTO Item VALUES(:itemid, :title, :category, :genre, :device, to_date(:rdate, 'yyyy-mm-dd'), :price, :rent_price, 0)";
+    $query = "INSERT INTO Item VALUES(:itemid, :title, :category, :genre, :device, to_date(:rdate, 'yyyy-mm-dd'), :price, :rent_price)";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":itemid", $params['itemid']);
     oci_bind_by_name($stmt, ":title", $params['title']);
