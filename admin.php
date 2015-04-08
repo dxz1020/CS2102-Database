@@ -101,6 +101,18 @@
     }
 
     $dbh = connectToDatabase();
+    $query = "SELECT * FROM Accounts WHERE email=:email";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $params['email']);
+    oci_execute($stmt);
+    if($row = oci_fetch_row($stmt)){
+      oci_free_statement($stmt);
+      closeConnection($dbh);
+      echo "This email address is in use by another user.";
+      return;
+    }
+    oci_free_statement($stmt);
+
     $query = "INSERT INTO Accounts VALUES(:email, :username, :password, :admin)";
     $stmt = oci_parse($dbh, $query);
     oci_bind_by_name($stmt, ":email", $params['email']);
