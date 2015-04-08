@@ -12,7 +12,19 @@
   $('#addNewItemForm').submit(function(e){
     var values = $('#addNewItemForm').serializeArray();
     console.log("add new item form");
-    console.log(values);
+    
+    //prepare array
+    var params = {
+      title : values[0].value,
+      genre : values[2].value,
+      device : values[3].value,
+      category : values[1].value,
+      rdate : values[4].value,
+      price : values[5].value,
+      rent_price : values[6].value
+    };    
+    console.log(params);
+    processNewItem(params);
     e.preventDefault();
   });
 
@@ -53,8 +65,24 @@
       e.preventDefault();
   });
 
-
 });
+
+function processNewItem(params){
+    $.ajax({
+    method: "POST",
+    url: "../admin.php?type=additem",
+    contentType : "application/json",
+    data: JSON.stringify(params)
+  })
+  .done(function(data) {
+    console.log( "added new item"); 
+    console.log(data);
+    location.reload();
+  })
+  .fail(function(msg) {
+    console.log("failed "); 
+  });
+}
 
 function processNewAccount(params){
     $.ajax({
@@ -66,6 +94,7 @@ function processNewAccount(params){
   .done(function(data) {
     console.log( "added new account"); 
     console.log(data);
+    location.reload();
   })
   .fail(function(msg) {
     console.log("failed "); 
@@ -106,12 +135,33 @@ function renderItemTable(arr){
     "<td>" + arr[i].PRICE + "</td>" +
     "<td>" + arr[i].RENT_PRICE + "</td>" +
     "<td>" + arr[i].LIKES + "</td>" +
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ID + ')">Modify</button></td>' +
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ID + ')">Drop</button></td>' +
+    '<td><button class= "btn btn-default btn-sm" onclick="deleteItem(' + arr[i].ITEM_ID + ')">Modify</button></td>' +
+    '<td><button class= "btn btn-default btn-sm" onclick="deleteItem(' + arr[i].ITEM_ID + ')">Drop</button></td>' +
     "</tr>"
   }
 
   return string;
+}
+
+function deleteItem(item) {
+  var params = {
+    itemid : item
+  };
+
+  $.ajax({
+    method: "POST",
+    url: "../admin.php?type=deleteitem",
+    contentType : "application/json",
+    data: JSON.stringify(params)
+  })
+  .done(function(data) {
+    console.log( "Deleting Item..."); 
+    console.log(data); //should show 1 if success
+    location.reload();
+  })
+  .fail(function(msg) {
+    console.log("failed in deleting account"); 
+  });
 }
 
 function sayA(itemid){
@@ -169,6 +219,7 @@ function deleteAccount(userEmail) {
   .done(function(data) {
     console.log( "Deleting account..."); 
     console.log(data); //should show 1 if success
+    location.reload();
   })
   .fail(function(msg) {
     console.log("failed in deleting account"); 
@@ -235,6 +286,10 @@ function getRentHistory() {
 function renderRentHistoryTable(arr){
   var string ="";
 
+  for(var i =0;i<arr.length;i++) {
+    if(arr[i].RETURN_DATE == null)
+      arr[i].RETURN_DATE = "-";
+  }
   for(var i=0;i<arr.length;i++){
     string +=
     '<tr>' +
