@@ -163,14 +163,14 @@
     $dbh = connectToDatabase();
 
     //Get list of purchases
-    $query = "SELECT * FROM Purchase GROUP BY customer, item, purchase_date";
+    $query = "SELECT * FROM Purchase GROUP BY customer, item, purchase_date ORDER BY purchase_date DESC";
     $stmt = oci_parse($dbh, $query);
     oci_execute($stmt);
     while($row = oci_fetch_assoc($stmt)) array_push($purchase_array, $row);
     oci_free_statement($stmt);
 
     //Get list of rent transactions
-    $query = "SELECT * FROM Rent GROUP BY customer, item, borrow_date, due_date, return_date";
+    $query = "SELECT * FROM Rent GROUP BY customer, item, borrow_date, due_date, return_date ORDER BY borrow_date DESC";
     $stmt = oci_parse($dbh, $query);
     oci_execute($stmt);
     while($row = oci_fetch_assoc($stmt)) array_push($rent_array, $row);
@@ -195,7 +195,7 @@
     $dbh = connectToDatabase();
 
     //Get list of accounts
-    $query = "SELECT email, username, admin FROM Accounts";
+    $query = "SELECT email, username, admin FROM Accounts ORDER BY admin, username DESC";
     $stmt = oci_parse($dbh, $query);
     oci_execute($stmt);
     while($row = oci_fetch_assoc($stmt)) array_push($acc_array, $row);
