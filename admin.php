@@ -216,6 +216,14 @@
     echo json_encode($acc_array);
   }
 
+  function editAccount(){
+    //To be implemented
+  }
+
+  function editItem(){
+    //To be implemented
+  }
+
   session_start();
 
   if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
@@ -233,6 +241,8 @@
     case 'deleteaccount': deleteAccount();break;
     case 'accounts' : listAccounts(); break;
     case 'transactions': listTransactions();
+    case 'editaccount': editAccount(); break;
+    case 'edititem': editItem(); break;
     default: http_response_code(400); break;
   }
 ?>
