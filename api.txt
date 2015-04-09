@@ -94,3 +94,29 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
     Method: GET
     URL: /admin/accounts
     Returns: An array of accounts
+
+15. Edit user account
+    Method: POST
+    URL: /admin/editaccount
+    Parameters: cur_email -> The current email(mandatory)
+		password -> The current password(mandatory)
+		new_email -> The new email(optional)
+		new_password -> The new password(optional)
+		admin -> The new admin status(optional, either 'Y' or 'N')
+    Retuens: 1 if the update is successful, 0 otherwise.
+    *Note: At least 1 of the optional parameters must be provided.
+
+16. Edit item
+    Method: POST
+    URL: /admin/edititem
+    Parameters: itemid -> The current item id(mandatory)
+		new_itemid -> The new item id(optional)
+		new_title -> The new title(optional)
+		new_category -> The new category(optional)
+		new_genre -> The new genre(optional)
+		new_device -> The new device(optional)
+		new_releasedate -> The updated release date(optional)
+		new_price -> The new price(optional)
+		new_rentprice -> The new rent price(optional)
+    Returns: 1 if the update is successful, 0 otherwise.
+    *Note: At least 1 of the optional parameters must be provided.
