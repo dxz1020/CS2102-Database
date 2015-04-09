@@ -32,10 +32,10 @@
     }
 
     $params = json_decode(file_get_contents('php://input'), true);
-    if(!isset($params['itemid']) || !isset($params['title']) ||
-       !isset($params['category']) || !isset($params['genre']) ||
-       !isset($params['device']) || !isset($params['rdate']) ||
-       !isset($params['price']) || !isset($params['rent'])){
+    if(!isset($params['title']) || !isset($params['category']) ||
+	!isset($params['genre']) || !isset($params['device']) ||
+	!isset($params['rdate']) || !isset($params['price']) ||
+	!isset($params['rent'])){
           http_response_code(400);
           return;
     }
@@ -44,11 +44,20 @@
     //$release_date = date("Y-m-d");
 
     $dbh = connectToDatabase();
+    $query = "SELECT MAX(TO_NUMBER(item_id)) AS MAXID FROM Item";
+    $stmt = oci_parse($dbh, $query);
+    oci_execute($stmt);
+    $itemid = 0;
+    if($row = oci_fetch_assoc($stmt)) $itemid = $row['MAXID']+1;
+    else $itemid = 1;
+    $itemid = (string)$itemid;
+    echo $itemid;
+    oci_free_statement($stmt);
 
     //Actual Insertion
     $query = "INSERT INTO Item VALUES(:itemid, :title, :category, :genre, :device, to_date(:rdate, 'yyyy-mm-dd'), :price, :rent_price)";
     $stmt = oci_parse($dbh, $query);
-    oci_bind_by_name($stmt, ":itemid", $params['itemid']);
+    oci_bind_by_name($stmt, ":itemid", $itemid);
     oci_bind_by_name($stmt, ":title", $params['title']);
     oci_bind_by_name($stmt, ":category", $params['category']);
     oci_bind_by_name($stmt, ":genre", $params['genre']);
