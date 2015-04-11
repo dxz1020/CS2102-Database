@@ -99,7 +99,6 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
     Method: POST
     URL: /admin/editaccount
     Parameters: cur_email -> The current email(mandatory)
-		password -> The current password(mandatory)
 		new_email -> The new email(optional)
 		new_password -> The new password(optional)
 		admin -> The new admin status(optional, either 'Y' or 'N')
