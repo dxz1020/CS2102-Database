@@ -217,11 +217,48 @@
   }
 
   function editAccount(){
-    //To be implemented
+    //Check for correct request method and content type
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400);
+      return;
+    }
+
+    //Check for mandatory parameter and at least 1 optional parameter
+    $params = json_decode(file_get_contents('php://input'), true);
+    if(!isset($params['cur_email']) || (!isset($params['new_email']) &&
+	!isset($params['new_password']) && !isset($params['admin']))){
+      http_response_code(400);
+      return 0;
+    }
+
+    //Build query string
+    $settings = array();
+    if(isset($params['new_email']))
+      array_push($settings, "email='".$params['new_email']."'");
+    if(isset($params['new_password']))
+      array_push($settings, "password='".$params['new_password']."'");
+    if(isset($params['admin']))
+      array_push($settings, "admin='".$params['admin']."'");
+    $query = "UPDATE Accounts SET";
+    $num_settings = count($settings); //Guaranteed at least 1
+    $query.=" ".$settings[0];
+    for($i=1; $i<$num_settings; $i++) $query.=", ".$settings[$i];
+    $query.=" WHERE email=:email";
+
+    //Execute query
+    $dbh = connectToDatabase();
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":email", $params['cur_email']);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
+    closeConnection($dbh);
   }
 
   function editItem(){
     //To be implemented
+    $dbh = conenctToDatabase();
+    closeConnection($dbh);
   }
 
   session_start();
