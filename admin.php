@@ -256,8 +256,53 @@
   }
 
   function editItem(){
-    //To be implemented
-    $dbh = conenctToDatabase();
+    //Check request headers
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400);
+      return;
+    }
+
+    //Check for mandatory parameter and at least 1 optional parameter
+    $input = json_decode(file_get_contents('php://input'), true);
+    if(!isset($input['itemid']) || (!isset($input['new_itemid']) &&
+	!isset($input['new_title']) && !isset($input['new_category']) &&
+	!isset($input['genre']) && !isset($input['new_device']) &&
+	!isset($input['new_releasedate']) && !isset($input['new_price']) &&
+	!isset($input['new_rentprice']))){
+      http_response_code(400);
+      return;
+    }
+
+    //Query building
+    $params = array();
+    if(isset($input['new_itemid']))
+      array_push($params, "item_id='".$input['new_itemid']."'");
+    if(isset($input['new_title']))
+      array_push($params, "title='".$input['new_title']."'");
+    if(isset($input['new_category']))
+      array_push($params, "category='".$input['new_category']."'");
+    if(isset($input['new_genre']))
+      array_push($params, "genre='".$input['new_genre']."'");
+    if(isset($input['new_device']))
+      array_push($params, "device='".$input['new_device']."'");
+    if(isset($input['new_releasedate']))
+      array_push($params, "release_date=to_date('".$input['new_releasedate']."', 'yyyy-mm-dd')");
+    if(isset($input['new_price']))
+      array_push($params, "price=".$input['new_price']);
+    if(isset($input['new_rentprice']))
+      array_push($params, "rent_price=".$input['new_rentprice']);
+    $query = "UPDATE Item SET ".$params[0];
+    $numSettings = count($params); //Guaranteed at least 1
+    for($i=1; $i<$numSettings; $i++) $query.=", ".$params[$i];
+    $query.=" WHERE item_id=:itemid";
+
+    //Executing the query
+    $dbh = connectToDatabase();
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":itemid", $input['itemid']);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
     closeConnection($dbh);
   }
 
