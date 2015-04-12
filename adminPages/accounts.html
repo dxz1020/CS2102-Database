@@ -118,5 +118,99 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="editAccountModal" tabindex="-1" role="dialog" aria-labelledby="editAccountLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Edit Account</h4>
+			</div>
+			<div id="editAccountBody" class="modal-body" data-email="" >
+				<form class="form-inline" id="editAccountForm">
+					<div class="form-group">
+						<label for="email">New Email</label>
+						<input type="text" class="form-control" name="email">
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" name="password">
+					</div>
+					<br /><br />
+					<div class="form-group">
+						<label for="accountType">Account Type</label>
+						<input type="text" class="form-control" name="accountType">
+					</div>
+				
+					<!-- ID AND LIKES TO BE ASSIGNED -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary" id="">Submit</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
 
 </html>
+
+<script>
+$(function() {
+
+	$('#editAccountModal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget); // Button that triggered the modal
+	  var currEmail = button.data('id'); // Extract info from data-* attributes
+	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+	  var modal = $(this)
+
+	  modal.find('.modal-body').attr("data-email", currEmail);
+
+	});
+
+	$('#editAccountForm').submit(function(e){
+		e.preventDefault();
+		console.log("edit account form");
+		var values = $(this).serializeArray();
+
+		//prepare array
+		var params = {
+		  cur_email : $('#editAccountBody').attr("data-email"),
+		  new_email : values[0].value,
+		  //username : values[0].value,
+		  new_password : values[1].value,
+		  admin : values[2].value
+		};
+
+		//delete uneeded fields
+		for(var prop in params) {
+			if(params[prop] == "") {
+					delete params[prop]; 
+			}
+		}  
+		console.log(params);
+		modifyAccount(params);
+	});
+
+
+	function modifyAccount(params) {
+	  $.ajax({
+	    method: "POST",
+	    url: "../admin.php?type=editaccount",
+	    contentType : "application/json",
+	    data: JSON.stringify(params)
+	  })
+	  
+	  .done(function(data) {
+	    console.log( "modifying account..."); 
+	    console.log(data); //should show 1 if success
+	    //location.reload();
+	  })
+	  .fail(function(msg) {
+	    console.log("failed in modifying account"); 
+	  });
+	}
+});
+</script>

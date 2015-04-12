@@ -135,7 +135,7 @@ function renderItemTable(arr){
     "<td>" + arr[i].PRICE + "</td>" +
     "<td>" + arr[i].RENT_PRICE + "</td>" +
     "<td>" + arr[i].LIKES + "</td>" +
-    '<td><button class= "btn btn-default btn-sm" onclick="deleteItem(' + arr[i].ITEM_ID + ')">Modify</button></td>' +
+    '<td><button class= "btn btn-default btn-sm" data-toggle="modal" data-id="' + arr[i].ITEM_ID + '"' + 'data-target="#editItemModal">Modify</button></td>' +
     '<td><button class= "btn btn-default btn-sm" onclick="deleteItem(' + arr[i].ITEM_ID + ')">Drop</button></td>' +
     "</tr>"
   }
@@ -196,7 +196,7 @@ function renderAccountTable(arr){
     '<th scope="row">' + arr[i].USERNAME + '</th>' + //username
     "<td>" + arr[i].EMAIL + "</td>" + //email
     "<td>" + arr[i].ADMIN + "</td>" + //accounttype
-    '<td><button class= "btn btn-default btn-sm" onclick="modifyAccount('+ "'" + arr[i].EMAIL + "'" + ')">Modify</button></td>' + //email
+    '<td><button class= "btn btn-default btn-sm" data-toggle="modal" data-id=' + '"' + arr[i].EMAIL + '"' + 'data-target="#editAccountModal">Modify</button></td>' + //email
     '<td><button class= "btn btn-default btn-sm" onclick="deleteAccount('+ "'" + arr[i].EMAIL + "'" + ')">Drop</button></td>' + //email
     "</tr>"
   }
