@@ -45,9 +45,7 @@
     $_SESSION['email'] = $row['EMAIL'];
     $_SESSION['username'] = $row['USERNAME'];
     $_SESSION['admin'] = $row['ADMIN'];
-    //oci_free_statement($stmt);
-    //oci_close($dbh);
-    if($_SESSION['admin']=='Y') header('Location: '.BASEURL);
+    if($_SESSION['admin']!='Y') header('Location: '.BASEURL);
     else header('Location: '.BASEURL.'adminPages/index.html');
   } else
     echo 0;
