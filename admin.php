@@ -227,7 +227,8 @@
     //Check for mandatory parameter and at least 1 optional parameter
     $params = json_decode(file_get_contents('php://input'), true);
     if(!isset($params['cur_email']) || (!isset($params['new_email']) &&
-	!isset($params['new_password']) && !isset($params['admin']))){
+	!isset($params['new_username']) && !isset($params['new_password']) &&
+	!isset($params['admin']))){
       http_response_code(400);
       return 0;
     }
@@ -236,6 +237,8 @@
     $settings = array();
     if(isset($params['new_email']))
       array_push($settings, "email='".$params['new_email']."'");
+    if(isset($params['new_username']))
+      array_push($settings, "username='".$params['new_username']."'");
     if(isset($params['new_password']))
       array_push($settings, "password='".$params['new_password']."'");
     if(isset($params['admin']))
