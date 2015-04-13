@@ -134,6 +134,10 @@
 						<input type="text" class="form-control" name="email">
 					</div>
 					<div class="form-group">
+						<label for="username">New Username</label>
+						<input type="text" class="form-control" name="username">
+					</div>
+					<div class="form-group">
 						<label for="password">Password</label>
 						<input type="password" class="form-control" name="password">
 					</div>
@@ -179,9 +183,9 @@ $(function() {
 		var params = {
 		  cur_email : $('#editAccountBody').attr("data-email"),
 		  new_email : values[0].value,
-		  //username : values[0].value,
-		  new_password : values[1].value,
-		  admin : values[2].value
+		  new_username : values[1].value,
+		  new_password : values[2].value,
+		  admin : values[3].value
 		};
 
 		//delete uneeded fields
