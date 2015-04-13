@@ -299,7 +299,10 @@ myApp.controller('LoginController', ['$scope', function($scope, $ionicPopup) {
 			contentType: "application/json"
 		})
 		.done(function( msg ) {
-			if(msg!=0){
+			if(msg==1) { //if admin
+				console.log("i am an admin" + msg);
+				document.location.href='http://cs2102-i.comp.nus.edu.sg/~a0114906/adminPages/index.html';
+			} else if(msg!=0){
 				//Ask zixian to pass me name
 				//alert("You have successfully log in");
 				/*var alertPopup = $ionicPopup.alert({
@@ -308,7 +311,7 @@ myApp.controller('LoginController', ['$scope', function($scope, $ionicPopup) {
 				});
 					alertPopup.then(function(res) {
 				});*/
-
+				console.log("i am a normal human " + msg);
 				$('.logout-btn').css({
 					"background-color": "#ef4e3a",
 					"border-color": "#cc2311"

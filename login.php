@@ -2,7 +2,7 @@
   /* login.php
    * Handles login requests.
    */
-  define('BASEURL', 'http://cs2102-i.comp.nus.edu.sg/~a0110781/');
+  define('BASEURL', 'http://cs2102-i.comp.nus.edu.sg/~a0114906/');
 
   if($_SERVER['REQUEST_METHOD']!="POST" ||
 	$_SERVER['CONTENT_TYPE']!='application/json'){
@@ -21,8 +21,8 @@
   $password = $param_list['password'];
 
   putenv("ORACLE_HOME=/oraclient");
-  $dbuser = "a0110781";		//Your own account
-  $dbpassword = "Nana7Nana";	//Change to appropriate password
+  $dbuser = "a0114906";		//Your own account
+  $dbpassword = "crse1420";	//Change to appropriate password
   $dbinfo = "(DESCRIPTION = (ADDRESS_LIST = (
       ADDRESS = (PROTOCOL = TCP)(HOST = sid3.comp.nus.edu.sg)(PORT = 1521))
     )(CONNECT_DATA = (SERVICE_NAME = sid3.comp.nus.edu.sg)))";
@@ -46,8 +46,12 @@
     $_SESSION['username'] = $row['USERNAME'];
     $_SESSION['admin'] = $row['ADMIN'];
     if($_SESSION['admin']!='Y') header('Location: '.BASEURL);
-    else header('Location: '.BASEURL.'adminPages/index.html');
-  } else
+    else {
+      //header('Location: '.BASEURL.'adminPages/index.html');
+      echo 1; //signal admin
+    }
+  } 
+  else
     echo 0;
 
   oci_free_statement($stmt);

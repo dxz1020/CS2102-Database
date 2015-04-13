@@ -9,5 +9,5 @@
   unset($_SESSION['admin']);
   session_destroy();
   
-  header("Location: http://cs2102-i.comp.nus.edu.sg/~a0110781/");
+  header("Location: http://cs2102-i.comp.nus.edu.sg/~a0114906/");
 ?>
