@@ -45,8 +45,9 @@
     $_SESSION['email'] = $row['EMAIL'];
     $_SESSION['username'] = $row['USERNAME'];
     $_SESSION['admin'] = $row['ADMIN'];
-    if($_SESSION['admin']!='Y') header('Location: '.BASEURL);
-    else {
+    if($_SESSION['admin']!='Y') {
+       echo 2;
+    } else {
       //header('Location: '.BASEURL.'adminPages/index.html');
       echo 1; //signal admin
     }

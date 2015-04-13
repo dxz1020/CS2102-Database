@@ -253,7 +253,7 @@ function renderPurchaseHistoryTable(arr){
     string +=
     '<tr>' +
     '<th scope="row">' + arr[i].CUSTOMER + '</th>' + //customer
-    "<td>" + arr[i].ITEM + "</td>" + //item
+    "<td>" + arr[i].TITLE + "</td>" + //item
     "<td>" + arr[i].PURCHASE_DATE + "</td>" + //date
   /*  '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Modify</button></td>' + //email
     '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Drop</button></td>' + //email*/
@@ -294,7 +294,7 @@ function renderRentHistoryTable(arr){
     string +=
     '<tr>' +
     '<th scope="row">' + arr[i].CUSTOMER + '</th>' + //customer
-    "<td>" + arr[i].ITEM + "</td>" + //item
+    "<td>" + arr[i].TITLE + "</td>" + //item
     "<td>" + arr[i].BORROW_DATE + "</td>" + //borrowed
     "<td>" + arr[i].DUE_DATE + "</td>" + //due
     "<td>" + arr[i].RETURN_DATE + "</td>" + //returned
