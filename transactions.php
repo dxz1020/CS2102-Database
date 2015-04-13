@@ -6,8 +6,8 @@
   //Duplicate buy/rent transactions are not allowed.
 
   putenv("ORACLE_HOME=/oraclient");
-  $dbuser = "a0110781";		//Change to your own account
-  $dbpassword = "Nana7Nana";	//Change to appropriate password
+  $dbuser = "a0114906";		//Change to your own account
+  $dbpassword = "crse1420";	//Change to appropriate password
   $dbinfo = "(DESCRIPTION = (ADDRESS_LIST = (
       ADDRESS = (PROTOCOL = TCP)(HOST = sid3.comp.nus.edu.sg)(PORT = 1521))
     )(CONNECT_DATA = (SERVICE_NAME = sid3.comp.nus.edu.sg)))";
@@ -157,6 +157,7 @@
     if($row = oci_fetch_assoc($stmt)){ //If the entry exists, return.
       oci_free_statement($stmt);
       closeConnection($dbh);
+      echo -1;
       return;
     }
     oci_free_statement($stmt); //Free resources.

@@ -129,16 +129,26 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			var alertPopup = $ionicPopup.alert({
-				title: 'Issue',
-				template: "Thank you for liking the item"
-			});
-			alertPopup.then(function(res) {
-				console.log("Thank you for liking the item");
-			});
-			var beforeLike = parseInt($('#' +item).html());
-			$('#' +item).html(beforeLike+1);
-		  
+			console.log(msg);
+			if(msg==-1) { //already like the item
+				var alertPopup = $ionicPopup.alert({
+					title: 'Issue',
+					template: "Sorry! you liked it"
+				});
+				alertPopup.then(function(res) {
+					console.log("Cannot like");
+				});
+			} else {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Thanks',
+					template: "Thank you for liking the item"
+				});
+				alertPopup.then(function(res) {
+					console.log("Thank you for liking the item");
+				});
+				var beforeLike = parseInt($('#' +item).html());
+				$('#' +item).html(beforeLike+1);
+		  	}
 		})
 		.fail(function(msg) {
 			
