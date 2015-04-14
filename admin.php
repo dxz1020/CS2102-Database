@@ -311,6 +311,49 @@
     closeConnection($dbh);
   }
 
+
+  function addPurchase(){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400); return;
+    }
+
+    $params = json_decode(file_get_contents('php://input'), true);
+    $pdate = date("Y-m-d");
+
+    $dbh = connectToDatabase();
+    $query = "INSERT INTO Purchase VALUES(:customer, :item, to_date(:pdate, 'yyyy-mm-dd'))"
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":customer", $params['customer']);
+    oci_bind_by_name($stmt, ":item", $params['item']);
+    oci_bind_by_name($stmt, ":pdate", $pdate);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
+    closeConnection($dbh);
+  }
+
+  function addRent(){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400); return;
+    }
+
+    $params = json_decode(file_get_contents('php://input'), true);
+    $rdate = date("Y-m-d");
+    $expiry_date = date("Y-m-d", strtotime("+2 weeks", strtotime($rdate)));
+
+    $dbh = connectToDatabase();
+    $query = "INSERT INTO Rent VALUES(:customer, :item, to_date(:rdate, 'yyyy-mm-dd'), to_date(:edate, 'yyyy-mm-dd'), NULL)";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":customer", $params['customer']);
+    oci_bind_by_name($stmt, ":item", $params['item']);
+    oci_bind_by_name($stmt, ":rdate", $rdate);
+    oci_bind_by_name($stmt, ":edate", $expiry_date);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
+    closeConnection($dbh);
+  }
+
   session_start();
 
   if(!isset($_SESSION['email']) || !isset($_SESSION['username']) ||
@@ -330,6 +373,10 @@
     case 'transactions': listTransactions();
     case 'editaccount': editAccount(); break;
     case 'edititem': editItem(); break;
+    case 'addpurchase': addPurchase(); break;
+    case 'deletepurchase': deletePurchase(); break;
+    case 'addrent': addRent(); break;
+    case 'deleterent': deleteRent(); break;
     default: http_response_code(400); break;
   }
 ?>
