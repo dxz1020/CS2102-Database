@@ -120,3 +120,28 @@ For POST parameters, set 'Content-Type' request header to 'application/json'.
 		new_rentprice -> The new rent price(optional)
     Returns: 1 if the update is successful, 0 otherwise.
     *Note: At least 1 of the optional parameters must be provided.
+
+17. Add purchase
+    Method: POST
+    URL: /admin/addpurchase
+    Parameters: customer -> Email address of the buyer
+		item -> The item id of the item to purchase
+
+18. Delete purchase
+    Method: POST
+    URL: /admin/deletepurchase
+    Parameters: customer -> Email address of buyer
+		itemid -> The id of the item purchased
+
+19. Add rent
+    Method: POST
+    URL: /admin/addrent
+    Parameters: customer -> The email address of user
+		itemid -> The id of the itme to rent
+
+20. Delete rent
+    Method: POST
+    URL: /admin/deleterent
+    Parameters: customer -> Email address of the user
+		itemid -> id of the item rented
+		borrowdate -> The borrow date
