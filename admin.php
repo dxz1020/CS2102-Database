@@ -311,7 +311,6 @@
     closeConnection($dbh);
   }
 
-
   function addPurchase(){
     if($_SERVER['REQUEST_METHOD']!='POST' ||
 	$_SERVER['CONTENT_TYPE']!='application/json'){
@@ -327,6 +326,24 @@
     oci_bind_by_name($stmt, ":customer", $params['customer']);
     oci_bind_by_name($stmt, ":item", $params['item']);
     oci_bind_by_name($stmt, ":pdate", $pdate);
+    oci_execute($stmt);
+    oci_free_statement($stmt);
+    closeConnection($dbh);
+  }
+
+  function deletePurchase(){
+    if($_SERVER['REQUEST_METHOD']!='POST' ||
+	$_SERVER['CONTENT_TYPE']!='application/json'){
+      http_response_code(400); return;
+    }
+   
+    $params = json_decode(file_get_contents('php://input'), true); 
+
+    $dbh = connectToDatabase();
+    $query = "DELETE FROM Purchase WHERE customer=:customer AND item=:item";
+    $stmt = oci_parse($dbh, $query);
+    oci_bind_by_name($stmt, ":customer", $params['customer']);
+    oci_bind_by_name($stmt, ":item", $params['item']);
     oci_execute($stmt);
     oci_free_statement($stmt);
     closeConnection($dbh);
