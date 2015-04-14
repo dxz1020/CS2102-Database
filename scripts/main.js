@@ -335,7 +335,7 @@ function renderPurchaseHistoryTable(arr){
     "<td>" + arr[i].TITLE + "</td>" + //item
     "<td>" + arr[i].PURCHASE_DATE + "</td>" + //date
   /*  '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Modify</button></td>' + //email*/
-    //'<td><button class= "btn btn-default btn-sm" onclick="deletePurchase(' + arr[i].ITEM + ",'" + arr[i].CUSTOMER + "'" + ')">Drop</button></td>' + //email
+    '<td><button class= "btn btn-default btn-sm" onclick="deletePurchase(' + arr[i].ITEM + ",'" + arr[i].CUSTOMER + "'" + ')">Drop</button></td>' + //email
     "</tr>"
   }
 
@@ -378,8 +378,8 @@ function renderRentHistoryTable(arr){
     "<td>" + arr[i].BORROW_DATE + "</td>" + //borrowed
     "<td>" + arr[i].DUE_DATE + "</td>" + //due
     "<td>" + arr[i].RETURN_DATE + "</td>" + //returned
-/*    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ + ')">Modify</button></td>' +
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Drop</button></td>' +*/
+/*    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ + ')">Modify</button></td>' +*/
+    '<td><button class= "btn btn-default btn-sm" onclick="deleteRent(' + arr[i].ITEM + ",'" + arr[i].CUSTOMER + "','" + arr[1].BORROW_DATE + "'" + ')">Drop</button></td>' +
     "</tr>"
   }
 
