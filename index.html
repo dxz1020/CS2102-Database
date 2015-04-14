@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,8 +22,9 @@
             <ion-tabs class="tabs-positive tabs-icon-top">			
                 <ion-tab title="Home" icon-on="ion-home" icon-off="ion-home" on-select="getHome()">
                     <ion-header-bar class="bar-positive">
-                        <button class="button button-positive" ng-click="toggleLeft()">Options</button>
-                        <h1 style="display:inline-block;" class="title" id="dynamictitle" ng-bind="name"></h1>
+                        <button class="button button-positive" ng-click="toggleLeft()">SideBar</button>
+                        <h1 style="display:inline-block;" class="title"><?php if(!isset($_SESSION['username'])) echo "Digital Content Store"; 
+                            else echo $_SESSION['username']; ?></h1>
                         <button class="button button-balanced login-btn" ng-click="login()">Login</button>
                         <button class="button button-dark logout-btn" ng-click="logout()">Logout</button>                
 

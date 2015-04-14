@@ -4,8 +4,8 @@
    */
 
   putenv("ORACLE_HOME=/oraclient");
-  $dbuser = "a0110781";   //Change to your own account
-  $dbpassword = "Nana7Nana";  //Change to appropriate password
+  $dbuser = "a0114906";   //Change to your own account
+  $dbpassword = "crse1420";  //Change to appropriate password
   $dbinfo = "(DESCRIPTION = (ADDRESS_LIST = (
       ADDRESS = (PROTOCOL = TCP)(HOST = sid3.comp.nus.edu.sg)(PORT = 1521))
     )(CONNECT_DATA = (SERVICE_NAME = sid3.comp.nus.edu.sg)))";
@@ -172,14 +172,16 @@
     $dbh = connectToDatabase();
 
     //Get list of purchases
-    $query = "SELECT * FROM Purchase GROUP BY customer, item, purchase_date ORDER BY purchase_date DESC";
+    $query = "SELECT P.customer, P.item, P.purchase_date,I.title FROM Purchase P INNER JOIN Item I on P.item=I.item_id GROUP BY P.customer, P.item, P.purchase_date,I.title ORDER BY P.purchase_date DESC";
+    //$query = "SELECT * FROM Purchase GROUP BY customer, item, purchase_date ORDER BY purchase_date DESC";
     $stmt = oci_parse($dbh, $query);
     oci_execute($stmt);
     while($row = oci_fetch_assoc($stmt)) array_push($purchase_array, $row);
     oci_free_statement($stmt);
 
     //Get list of rent transactions
-    $query = "SELECT * FROM Rent GROUP BY customer, item, borrow_date, due_date, return_date ORDER BY borrow_date DESC";
+    $query = "SELECT R.customer, R.item, R.borrow_date, R.due_date, R.return_date, I.title FROM Rent R INNER JOIN Item I on R.item=I.item_id GROUP BY R.customer, R.item, R.borrow_date, R.due_date, R.return_date, I.title ORDER BY R.borrow_date DESC";
+    //$query = "SELECT * FROM Rent GROUP BY customer, item, borrow_date, due_date, return_date ORDER BY borrow_date DESC";
     $stmt = oci_parse($dbh, $query);
     oci_execute($stmt);
     while($row = oci_fetch_assoc($stmt)) array_push($rent_array, $row);

@@ -21,7 +21,7 @@
       category : values[1].value,
       rdate : values[4].value,
       price : values[5].value,
-      rent_price : values[6].value
+      rent : values[6].value
     };    
     console.log(params);
     processNewItem(params);
@@ -44,17 +44,37 @@
     e.preventDefault();
   });
 
-    $('#addNewPurchaseForm').submit(function(e){
+  $('#addNewPurchaseForm').submit(function(e){
     var values = $(this).serializeArray();
     console.log("add new purchase form");
     console.log(values);
+    
+    var params = {
+      email : values[0].value,
+      item : values[1].value,
+      date : values[2].value
+    };
+
+    processNewPurchase(params);
     e.preventDefault();
+
   });
 
     $('#addNewRentForm').submit(function(e){
     var values = $(this).serializeArray();
     console.log("inside rent");
+    
+    var params = {
+      email : values[0].value,
+      item : values[1].value,
+      bdate : values[2].value,
+      ddate : values[3].value,
+      rdate : values[4].value
+    };
+
+    processNewRent(params);
     console.log(values);
+
     e.preventDefault();
   });
 
@@ -93,6 +113,41 @@ function processNewAccount(params){
   })
   .done(function(data) {
     console.log( "added new account"); 
+    console.log(data);
+    location.reload();
+  })
+  .fail(function(msg) {
+    console.log("failed "); 
+  });
+}
+
+
+function processNewPurchase(params){
+    $.ajax({
+    method: "POST",
+    url: "../admin.php?type=addpurchase",
+    contentType : "application/json",
+    data: JSON.stringify(params)
+  })
+  .done(function(data) {
+    console.log( "added new purchase"); 
+    console.log(data);
+    location.reload();
+  })
+  .fail(function(msg) {
+    console.log("failed ");
+  });
+}
+
+function processNewRent(params){
+    $.ajax({
+    method: "POST",
+    url: "../admin.php?type=addrent",
+    contentType : "application/json",
+    data: JSON.stringify(params)
+  })
+  .done(function(data) {
+    console.log( "added new rent"); 
     console.log(data);
     location.reload();
   })
@@ -226,6 +281,29 @@ function deleteAccount(userEmail) {
   });
 }
 
+function deletePurchase(itemid, email) {
+  var params = {
+    item: itemid,
+    email: email
+  };
+
+  $.ajax({
+    method: "POST",
+    url: "../admin.php?type=deletepurchase",
+    contentType : "application/json",
+    data: JSON.stringify(params)
+  })
+  
+  .done(function(data) {
+    console.log( "Deleting Purchase..."); 
+    console.log(data); //should show 1 if success
+    location.reload();
+  })
+  .fail(function(msg) {
+    console.log("failed in deleting purchase"); 
+  });
+}
+
 function getPurchaseHistory() {
 
   $.ajax({
@@ -253,10 +331,11 @@ function renderPurchaseHistoryTable(arr){
     string +=
     '<tr>' +
     '<th scope="row">' + arr[i].CUSTOMER + '</th>' + //customer
-    "<td>" + arr[i].ITEM + "</td>" + //item
+    "<td>" + arr[i].ITEM + "</td>" + 
+    "<td>" + arr[i].TITLE + "</td>" + //item
     "<td>" + arr[i].PURCHASE_DATE + "</td>" + //date
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Modify</button></td>' + //email
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Drop</button></td>' + //email
+  /*  '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Modify</button></td>' + //email*/
+    //'<td><button class= "btn btn-default btn-sm" onclick="deletePurchase(' + arr[i].ITEM + ",'" + arr[i].CUSTOMER + "'" + ')">Drop</button></td>' + //email
     "</tr>"
   }
 
@@ -294,12 +373,13 @@ function renderRentHistoryTable(arr){
     string +=
     '<tr>' +
     '<th scope="row">' + arr[i].CUSTOMER + '</th>' + //customer
-    "<td>" + arr[i].ITEM + "</td>" + //item
+    "<td>" + arr[i].ITEM + "</td>" +
+    "<td>" + arr[i].TITLE + "</td>" + //item
     "<td>" + arr[i].BORROW_DATE + "</td>" + //borrowed
     "<td>" + arr[i].DUE_DATE + "</td>" + //due
     "<td>" + arr[i].RETURN_DATE + "</td>" + //returned
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ + ')">Modify</button></td>' +
-    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Drop</button></td>' +
+/*    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM_ + ')">Modify</button></td>' +
+    '<td><button class= "btn btn-default btn-sm" onclick="sayA(' + arr[i].ITEM + ')">Drop</button></td>' +*/
     "</tr>"
   }
 

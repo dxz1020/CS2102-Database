@@ -129,16 +129,26 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			var alertPopup = $ionicPopup.alert({
-				title: 'Issue',
-				template: "Thank you for liking the item"
-			});
-			alertPopup.then(function(res) {
-				console.log("Thank you for liking the item");
-			});
-			var beforeLike = parseInt($('#' +item).html());
-			$('#' +item).html(beforeLike+1);
-		  
+			console.log(msg);
+			if(msg==-1) { //already like the item
+				var alertPopup = $ionicPopup.alert({
+					title: 'Issue',
+					template: "Sorry! only once"
+				});
+				alertPopup.then(function(res) {
+					console.log("Cannot like");
+				});
+			} else {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Thanks',
+					template: "Thank you for liking the item"
+				});
+				alertPopup.then(function(res) {
+					console.log("Thank you for liking the item");
+				});
+				var beforeLike = parseInt($('#' +item).html());
+				$('#' +item).html(beforeLike+1);
+		  	}
 		})
 		.fail(function(msg) {
 			
@@ -166,14 +176,26 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 			data: itemIdJSON
 		})
 		.done(function(msg) {
-			var alertPopup = $ionicPopup.alert({
-				title: 'Purchased',
-				template: "You have successfully purchased the item"
-			});
-			alertPopup.then(function(res) {
-				console.log("purhcase " + item);
-			});
-			//document.location.href='';   
+			if(msg==-1) {
+				console.log(msg);
+				var alertPopup = $ionicPopup.alert({
+					title: 'Purchased',
+					template: "Check your basket"
+				});
+				alertPopup.then(function(res) {
+					console.log("already purhcased " + item);
+				});
+
+			}	else {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Purchased',
+					template: "You have successfully purchased the item"
+				});
+				alertPopup.then(function(res) {
+					console.log("purhcase " + item);
+				});
+			}
+			   
 		})
 		.fail(function(msg) {
 			var alertPopup = $ionicPopup.alert({
@@ -200,18 +222,32 @@ function ContentController($scope, $ionicSideMenuDelegate, $ionicPopup) {
 			contentType:"application/json"
 		})
 		.done(function(msg) {
-			var alertPopup = $ionicPopup.alert({
-				title: 'Rented',
-				template: "You have successfully rented the item"
-			});
-			alertPopup.then(function(res) {
-				console.log("rented " + item);
-			});		       
+			console.log(msg);
+			if (msg==-1) {// rented before
+				var alertPopup = $ionicPopup.alert({
+					title: 'Error',
+					template: "You have this item"
+				});
+				alertPopup.then(function(res) {
+					console.log("rented " + item);
+				});	
+
+			} else {
+				var alertPopup = $ionicPopup.alert({
+					
+					title: 'Rented',
+					template: "You have successfully rented the item"
+				});
+				alertPopup.then(function(res) {
+					console.log("rented " + item);
+				});	
+			}
+	       
 		})
 		.fail(function(msg) {
 			var alertPopup = $ionicPopup.alert({
 				title: 'Issue',
-				template: "You have either rented this item or you aren't signed in"
+				template: "You aren't signed in"
 			});
 			alertPopup.then(function(res) {
 				console.log("rent fail");
@@ -299,28 +335,31 @@ myApp.controller('LoginController', ['$scope', function($scope, $ionicPopup) {
 			contentType: "application/json"
 		})
 		.done(function( msg ) {
-			if(msg!=0){
-				//Ask zixian to pass me name
-				//alert("You have successfully log in");
-				/*var alertPopup = $ionicPopup.alert({
-					title: 'Login',
-					template: "You have successfully log in"
-				});
-					alertPopup.then(function(res) {
-				});*/
+			if(msg==1) { //if admin
+				console.log("i am an admin" + msg);
+				document.location.href='http://cs2102-i.comp.nus.edu.sg/~a0114906/adminPages/index.html';
+			} else if(msg==2){
 
+				console.log("i am a normal human " + msg);
 				$('.logout-btn').css({
 					"background-color": "#ef4e3a",
 					"border-color": "#cc2311"
 				});
+
+	/*			var alertPopup = $ionicPopup.alert({
+					title: 'Welcome',
+					template: "You have successfully logged in"
+				});
+				alertPopup.then(function(res) {
+					console.log("rented " + item);
+				});*/
 				
 				var bigscope = angular.element($("#dynamictitle")).scope();
 				bigscope.$apply(function(){
-					bigscope.name = "Welcome!!";
-					
-				})				
-			}
-			else {
+					bigscope.name = "Welcome!!";	
+				})
+
+			} 	else {
 				alert("Verification failed");
 			}
 
@@ -372,7 +411,7 @@ function renderHistory(data){
 		
 		for(var i=0;i<data[0].length;i++) { 
 			purchaseStr += "<tr>";
-		 	purchaseStr += "<td>" + data[0][i].ITEM + "</td>";
+		 	purchaseStr += "<td>" + data[0][i].TITLE + "</td>";
 		 	purchaseStr += "<td>     </td>";
 		 	purchaseStr += "<td>" + data[0][i].PURCHASE_DATE + "</td>";
 		 	purchaseStr += "</tr>";
@@ -388,7 +427,7 @@ function renderHistory(data){
 		
 		for(var i=0;i<data[1].length;i++) { 
 			rentStr += "<tr>";
-		 	rentStr += "<td>" + data[1][i].ITEM + "</td>";
+		 	rentStr += "<td>" + data[1][i].TITLE + "</td>";
 		 	rentStr += "<td>     </td>";
 		 	rentStr += "<td>" + data[1][i].BORROW_DATE + "</td>";
 		 	rentStr += "<td>     </td>";
